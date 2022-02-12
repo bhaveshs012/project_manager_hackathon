@@ -7,6 +7,7 @@ import 'package:project_manager_hackathon/models/projects.dart';
 import 'package:project_manager_hackathon/models/users.dart';
 import 'package:project_manager_hackathon/screens/projectScreen/create_project_screen.dart';
 import 'package:project_manager_hackathon/screens/projectScreen/widgets/project_card.dart';
+import 'package:project_manager_hackathon/screens/taskScreen/task_screen.dart';
 import 'package:sizer/sizer.dart';
 
 class ProjectScreen extends StatelessWidget {

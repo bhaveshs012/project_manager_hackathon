@@ -3,6 +3,7 @@ import 'package:project_manager_hackathon/models/users.dart';
 import 'package:project_manager_hackathon/screens/chatScreen/chat_init_screen.dart';
 import 'package:project_manager_hackathon/screens/meetScreen/meet_init_screen.dart';
 import 'package:project_manager_hackathon/screens/profileScreen/profile_screen.dart';
+import 'package:project_manager_hackathon/screens/projectScreen/project_screen.dart';
 import 'package:project_manager_hackathon/screens/sharedWidget/nav_widget.dart';
 
 class MyCustomBottomNavbar extends StatefulWidget {
