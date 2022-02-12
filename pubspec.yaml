@@ -49,6 +49,7 @@ dependencies:
   jitsi_meet: ^4.0.0
   random_string: ^2.3.1
   introduction_screen: ^2.1.0
+  shared_preferences: ^2.0.13
 
 dev_dependencies:
   flutter_test:

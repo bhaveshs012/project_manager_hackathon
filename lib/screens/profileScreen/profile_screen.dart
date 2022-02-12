@@ -63,8 +63,9 @@ class ProfileScreen extends StatelessWidget {
             Icons.keyboard_arrow_left,
             size: 40,
           ),
-          onPressed: () => Get.offAll(
-              () => MyCustomBottomNavbar(initailIndex: 0, user: user)),
+          onPressed: () {
+            Get.offAll(() => LandingPage());
+          },
           color: Colors.black,
         ),
         actions: [

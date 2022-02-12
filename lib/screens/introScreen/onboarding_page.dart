@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:introduction_screen/introduction_screen.dart';
 import 'package:project_manager_hackathon/config/themes.dart';
-
-import 'package:project_manager_hackathon/landing_page.dart';
 import 'package:project_manager_hackathon/screens/introScreen/widgets/button_widgets.dart';
 import 'package:project_manager_hackathon/screens/loginScreen/login_screen.dart';
 import 'package:sizer/sizer.dart';
@@ -119,4 +117,3 @@ class OnBoardingPage extends StatelessWidget {
         pageColor: Colors.white,
       );
 }
-
