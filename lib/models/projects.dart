@@ -11,6 +11,6 @@ class Project {
   final int image;
   final String id;
   final String desc;
-  final  totalTasks;
-  final int? taskCompleted;
+  final int totalTasks;
+  final int taskCompleted;
 }
