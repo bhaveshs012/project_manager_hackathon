@@ -50,7 +50,10 @@ class ProjectScreen extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text('Hello, ${user.name.capitalize}',
-                        style: title2Style, overflow: TextOverflow.ellipsis),
+                        maxLines: 2,
+                        softWrap: true,
+                        style: title2Style,
+                        overflow: TextOverflow.ellipsis),
                     CircleAvatar(
                       radius: 30,
                       backgroundImage:
@@ -217,4 +220,3 @@ class ProjectCard extends StatelessWidget {
     );
   }
 }
-
