@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:project_manager_hackathon/screens/chatScreen/chat_init_screen.dart';
 import 'package:project_manager_hackathon/screens/projectScreen/project_screen.dart';
 import 'package:project_manager_hackathon/screens/sharedWidget/nav_widget.dart';
 
@@ -16,14 +17,14 @@ class _MyCustomBottomNavbarState extends State<MyCustomBottomNavbar>
   //controller to manage different tabs of the navbar
   late TabController _tabController;
 
-  
-    @override
+  @override
   void initState() {
     super.initState();
-    
+
     _tabController = TabController(
         length: 4, vsync: this, initialIndex: widget.initailIndex);
   }
+
   @override
   void dispose() {
     super.dispose();
@@ -40,7 +41,7 @@ class _MyCustomBottomNavbarState extends State<MyCustomBottomNavbar>
           //tab pages in correspondence to the navbar
           children: [
             projectScreen(),
-            Container(),
+            ChatInitScreen(),
             Container(),
             Container(),
           ],
