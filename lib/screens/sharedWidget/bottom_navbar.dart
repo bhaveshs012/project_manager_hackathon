@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:project_manager_hackathon/models/users.dart';
 import 'package:project_manager_hackathon/screens/chatScreen/chat_init_screen.dart';
 import 'package:project_manager_hackathon/screens/meetScreen/meet_init_screen.dart';
+import 'package:project_manager_hackathon/screens/profileScreen/profile_screen.dart';
 import 'package:project_manager_hackathon/screens/projectScreen/project_screen.dart';
 import 'package:project_manager_hackathon/screens/sharedWidget/nav_widget.dart';
 
@@ -37,21 +38,24 @@ class _MyCustomBottomNavbarState extends State<MyCustomBottomNavbar>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        //custom made tabview used as bottom navbar
-        bottomNavigationBar: CustomNavBarWidget(tabController: _tabController),
-        body: TabBarView(
-          controller: _tabController,
-          //tab pages in correspondence to the navbar
-          children: [
-            ProjectScreen(
-              user: widget.user,
-            ),
-            ChatInitScreen(
-              user: widget.user,
-            ),
-            MeetScreen(),
-            Container(),
-          ],
-        ));
+      //custom made tabview used as bottom navbar
+      bottomNavigationBar: CustomNavBarWidget(tabController: _tabController),
+      body: TabBarView(
+        controller: _tabController,
+        //tab pages in correspondence to the navbar
+        children: [
+          ProjectScreen(
+            user: widget.user,
+          ),
+          ChatInitScreen(
+            user: widget.user,
+          ),
+          MeetScreen(),
+          ProfileScreen(
+            user: widget.user,
+          ),
+        ],
+      ),
+    );
   }
 }
