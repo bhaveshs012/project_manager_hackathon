@@ -49,10 +49,12 @@ class ProjectScreen extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Flexible(
-                      child: Text('Hello, ${user.name.capitalize}',
-                          style: title2Style, overflow: TextOverflow.ellipsis),
-                    ),
+
+                    Text('Hello, ${user.name.capitalize}',
+                        maxLines: 2,
+                        softWrap: true,
+                        style: title2Style,
+                        overflow: TextOverflow.ellipsis),
                     CircleAvatar(
                       radius: 30,
                       backgroundImage:
