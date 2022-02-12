@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:project_manager_hackathon/models/users.dart';
-import 'package:project_manager_hackathon/screens/chatScreen/chat_init_screen.dart';
+import 'package:project_manager_hackathon/screens/profileScreen/profile_screen.dart';
 import 'package:project_manager_hackathon/screens/projectScreen/project_screen.dart';
 import 'package:project_manager_hackathon/screens/sharedWidget/nav_widget.dart';
 
@@ -44,7 +44,7 @@ class _MyCustomBottomNavbarState extends State<MyCustomBottomNavbar>
             ProjectScreen(user: widget.user,),
             ChatInitScreen(user: widget.user,),
             Container(),
-            Container(),
+            ProfileScreen(user: widget.user,)
           ],
         ));
   }
