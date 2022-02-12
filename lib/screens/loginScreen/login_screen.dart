@@ -14,7 +14,7 @@ class LoginScreen extends StatelessWidget {
           child: Column(
             children: [
               Image(
-                image: const AssetImage("assets/logo.png"),
+                image: const AssetImage("assets/images/brand-logo.gif"),
                 height: 60.h,
                 width: 80.w,
               ),
@@ -26,7 +26,7 @@ class LoginScreen extends StatelessWidget {
               SizedBox(
                 height: 7.h,
               ),
-             LoginButton(),
+              LoginButton(),
             ],
           ),
         ));
