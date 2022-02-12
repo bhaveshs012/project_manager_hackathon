@@ -30,7 +30,8 @@ class ProjectScreen extends StatelessWidget {
                     Text('Hello, Vishesh', style: title2Style),
                     CircleAvatar(
                       radius: 30,
-                      backgroundImage: NetworkImage(fbUser!.photoURL.toString()),
+                      backgroundImage:
+                          NetworkImage(fbUser!.photoURL.toString()),
                     ),
                   ],
                 ),
@@ -63,8 +64,7 @@ class ProjectScreen extends StatelessWidget {
                                         name: projectList[index]["name"],
                                         id: projectList[index]["id"],
                                         image: projectList[index]["image"],
-                                        desc:projectList[index]["desc"]
-                                        ),
+                                        desc: projectList[index]["desc"]),
                                   ),
                                 );
                               },
@@ -92,7 +92,9 @@ class ProjectScreen extends StatelessWidget {
 
 class ProjectCard extends StatelessWidget {
   const ProjectCard({
-    Key? key, required this.user, required this.project,
+    Key? key,
+    required this.user,
+    required this.project,
   }) : super(key: key);
   final MyUser user;
   final Project project;

@@ -3,8 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:project_manager_hackathon/controllers/google_signin.dart';
 import 'package:project_manager_hackathon/landing_page.dart';
-import 'package:project_manager_hackathon/screens/profileScreen/profile_screen.dart';
-import 'package:project_manager_hackathon/screens/sharedWidget/bottom_navbar.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 
@@ -33,3 +31,4 @@ class MyApp extends StatelessWidget {
         });
   }
 }
+

@@ -42,7 +42,7 @@ class _MyCustomBottomNavbarState extends State<MyCustomBottomNavbar>
           //tab pages in correspondence to the navbar
           children: [
             ProjectScreen(user: widget.user,),
-            Container(),
+            ChatInitScreen(user: widget.user,),
             Container(),
             ProfileScreen(user: widget.user,)
           ],

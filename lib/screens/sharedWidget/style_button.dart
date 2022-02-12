@@ -14,7 +14,10 @@ class StyledButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return ElevatedButton(
       onPressed: onTap,
-      child: Text(title),
+      child: Text(
+        title,
+        style: subtitlestyle.copyWith(color: Colors.white),
+      ),
       style: ButtonStyle(
         shape: MaterialStateProperty.all<RoundedRectangleBorder>(
           RoundedRectangleBorder(
