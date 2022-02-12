@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -8,6 +6,7 @@ import 'package:project_manager_hackathon/config/themes.dart';
 import 'package:project_manager_hackathon/models/projects.dart';
 import 'package:project_manager_hackathon/models/users.dart';
 import 'package:project_manager_hackathon/screens/projectScreen/assign_project_screen.dart';
+import 'package:project_manager_hackathon/screens/taskScreen/task_screen.dart';
 import 'package:sizer/sizer.dart';
 
 class ProjectScreen extends StatelessWidget {
@@ -27,7 +26,8 @@ class ProjectScreen extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text('Hello, Vishesh', style: title2Style),
+                    Text('Hello, ${user.name.capitalize}',
+                        style: title2Style, overflow: TextOverflow.ellipsis),
                     CircleAvatar(
                       radius: 30,
                       backgroundImage:
@@ -35,6 +35,33 @@ class ProjectScreen extends StatelessWidget {
                     ),
                   ],
                 ),
+                SizedBox(
+                  height: 2.h,
+                ),
+                Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text('Projects', style: title2Style),
+                      Visibility(
+                        visible: user.is_admin == true ? true : false,
+                        child: CircleAvatar(
+                          backgroundColor: Themes.primaryColor,
+                          radius: 20,
+                          child: Center(
+                            child: IconButton(
+                              icon: Icon(
+                                Icons.add,
+                                color: Colors.white,
+                                size: 20,
+                              ),
+                              onPressed: () {
+                                Get.to(AssignProject(user: user));
+                              },
+                            ),
+                          ),
+                        ),
+                      ),
+                    ]),
                 SizedBox(
                   height: 2.h,
                 ),
@@ -76,16 +103,6 @@ class ProjectScreen extends StatelessWidget {
               ],
             ),
           )),
-      floatingActionButton: Visibility(
-        visible: user.is_admin == true ? true : false,
-        child: FloatingActionButton(
-          backgroundColor: Themes.primaryColor,
-          child: const Icon(Icons.add),
-          onPressed: () {
-            Get.to(() => AssignProject(user: user));
-          },
-        ),
-      ),
     );
   }
 }
@@ -101,48 +118,53 @@ class ProjectCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 20.h,
-      width: double.infinity,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(20),
-        image: DecorationImage(
-            image: AssetImage('assets/images/${project.image}.png'),
-            fit: BoxFit.cover),
-      ),
-      child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 5.w, vertical: 1.5.h),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(project.name, style: title2Style),
-            SizedBox(
-              height: 1.h,
-            ),
-            SizedBox(
-              width: 60.w,
-              child: Text(project.desc,
-                  overflow: TextOverflow.ellipsis,
-                  maxLines: 3,
-                  style: subtitlestyle),
-            ),
-            SizedBox(
-              height: 3.h,
-            ),
-            RichText(
-                text: TextSpan(
-                    text: "12/20 tasks",
-                    style: subtitlestyle,
-                    children: [
-                  TextSpan(
-                    text: "  70%",
-                    style: subtitlestyle.copyWith(
-                        color: Colors.green,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 15.sp),
-                  )
-                ]))
-          ],
+    return GestureDetector(
+      onTap: () {
+        Get.to(() => TaskScreen(user: user, project: project));
+      },
+      child: Container(
+        height: 20.h,
+        width: double.infinity,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(20),
+          image: DecorationImage(
+              image: AssetImage('assets/images/${project.image}.png'),
+              fit: BoxFit.cover),
+        ),
+        child: Padding(
+          padding: EdgeInsets.symmetric(horizontal: 5.w, vertical: 1.5.h),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(project.name, style: title2Style),
+              SizedBox(
+                height: 1.h,
+              ),
+              SizedBox(
+                width: 60.w,
+                child: Text(project.desc,
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 3,
+                    style: subtitlestyle),
+              ),
+              SizedBox(
+                height: 3.h,
+              ),
+              RichText(
+                  text: TextSpan(
+                      text: "12/20 tasks",
+                      style: subtitlestyle,
+                      children: [
+                    TextSpan(
+                      text: "  70%",
+                      style: subtitlestyle.copyWith(
+                          color: Colors.green,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 15.sp),
+                    )
+                  ]))
+            ],
+          ),
         ),
       ),
     );
