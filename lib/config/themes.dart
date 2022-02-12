@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:project_manager_hackathon/screens/sharedWidget/bottom_navbar.dart';
 import 'package:sizer/sizer.dart';
 
 class Themes {
@@ -12,7 +10,6 @@ class Themes {
   static const mPriorityPrimaryColor = Color.fromARGB(255, 252, 247, 235);
   static const mPrioritySecondaryColor = Color(0xffFDBF0B);
   static const primaryColor = Color(0xff3972F2);
-  
 }
 
 TextStyle get title1Style {
@@ -39,5 +36,3 @@ TextStyle get subtitlestyle {
 EdgeInsetsGeometry get padding {
   return EdgeInsets.symmetric(horizontal: 4.w, vertical: 2.h);
 }
-
-

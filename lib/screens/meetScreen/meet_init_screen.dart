@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:project_manager_hackathon/config/themes.dart';
+import 'package:project_manager_hackathon/screens/meetScreen/create_meet.dart';
+import 'package:project_manager_hackathon/screens/meetScreen/join_meet.dart';
 import 'package:project_manager_hackathon/screens/sharedWidget/style_button.dart';
 import 'package:project_manager_hackathon/screens/sharedWidget/top_row.dart';
 
@@ -12,7 +14,7 @@ class MeetScreen extends StatelessWidget {
     return Scaffold(
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.all(15.0),
+          padding: padding,
           child: Column(
             children: [
               TopRow(
@@ -26,13 +28,13 @@ class MeetScreen extends StatelessWidget {
                   StyledButton(
                     title: "Create a Meeting",
                     onTap: () {
-                      // Get.to(CreateMeet());
+                      Get.to(CreateMeet());
                     },
                   ),
                   StyledButton(
                     title: "Join a Meeting",
                     onTap: () {
-                      // Get.to(JoinMeet());
+                      Get.to(JoinMeet());
                     },
                   ),
                 ],

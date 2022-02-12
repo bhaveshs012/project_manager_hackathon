@@ -123,7 +123,7 @@ class ProjectCard extends StatelessWidget {
         Get.to(() => TaskScreen(user: user, project: project));
       },
       child: Container(
-        height: 20.h,
+        height: 22.h,
         width: double.infinity,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(20),

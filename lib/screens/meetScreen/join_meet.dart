@@ -1,22 +1,22 @@
 import 'dart:io';
+import 'package:jitsi_meet/jitsi_meet.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:jitsi_meet/jitsi_meet.dart';
 import 'package:project_manager_hackathon/config/themes.dart';
 import 'package:project_manager_hackathon/screens/sharedWidget/input_field.dart';
 import 'package:project_manager_hackathon/screens/sharedWidget/top_row.dart';
-import 'package:random_string/random_string.dart';
+import 'package:sizer/sizer.dart';
 
-class CreateMeet extends StatefulWidget {
-  const CreateMeet({Key? key}) : super(key: key);
+class JoinMeet extends StatefulWidget {
+  const JoinMeet({Key? key}) : super(key: key);
 
   @override
-  _CreateMeetState createState() => _CreateMeetState();
+  _JoinMeetState createState() => _JoinMeetState();
 }
 
-class _CreateMeetState extends State<CreateMeet> {
+class _JoinMeetState extends State<JoinMeet> {
   final serverText = TextEditingController();
-  String roomText = "";
+  final roomText = TextEditingController();
   final subjectText = TextEditingController();
   final nameText = TextEditingController();
   final emailText = TextEditingController();
@@ -47,72 +47,57 @@ class _CreateMeetState extends State<CreateMeet> {
     double width = MediaQuery.of(context).size.width;
     return MaterialApp(
       home: Scaffold(
-        body: SafeArea(
-          child: Padding(
-            padding: padding,
-            child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  TopRow(title: "Create a Meet", style: title1Style),
-                  Container(
-                    padding: padding,
-                    child: kIsWeb
-                        ? Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              SizedBox(
-                                width: width * 0.30,
-                                child: meetConfig(),
-                              ),
-                              SizedBox(
-                                  width: width * 0.60,
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Card(
-                                        color: Colors.white54,
-                                        child: SizedBox(
-                                          width: width * 0.60 * 0.70,
-                                          height: width * 0.60 * 0.70,
-                                          child: JitsiMeetConferencing(
-                                            extraJS: [
-                                              // extraJs setup example
-                                              '<script>function echo(){console.log("echo!!!")};</script>',
-                                              '<script src="https://code.jquery.com/jquery-3.5.1.slim.js" integrity="sha256-DrT5NfxfbHvMHux31Lkhxg42LY6of8TaYyK50jnxRnM=" crossorigin="anonymous"></script>'
-                                            ],
-                                          ),
-                                        )),
-                                  ))
-                            ],
-                          )
-                        : meetConfig(),
-                  ),
-                ],
-              ),
-            ),
+        body: Container(
+          padding: const EdgeInsets.symmetric(
+            horizontal: 16.0,
           ),
+          child: kIsWeb
+              ? Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Container(
+                      width: width * 0.30,
+                      child: meetConfig(),
+                    ),
+                    Container(
+                        width: width * 0.60,
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Card(
+                              color: Colors.white54,
+                              child: SizedBox(
+                                width: width * 0.60 * 0.70,
+                                height: width * 0.60 * 0.70,
+                                child: JitsiMeetConferencing(
+                                  extraJS: [
+                                    // extraJs setup example
+                                    '<script>function echo(){console.log("echo!!!")};</script>',
+                                    '<script src="https://code.jquery.com/jquery-3.5.1.slim.js" integrity="sha256-DrT5NfxfbHvMHux31Lkhxg42LY6of8TaYyK50jnxRnM=" crossorigin="anonymous"></script>'
+                                  ],
+                                ),
+                              )),
+                        ))
+                  ],
+                )
+              : meetConfig(),
         ),
       ),
     );
   }
 
   Widget meetConfig() {
-    String meetCode() {
-      String part1 = randomAlpha(3);
-      String part2 = randomAlpha(3);
-      String part3 = randomAlpha(3);
-      return part1 + "-" + part2 + "-" + part3.toLowerCase();
-    }
-
     return SingleChildScrollView(
       child: SafeArea(
         child: Padding(
           padding: padding,
           child: Column(
             children: <Widget>[
+              TopRow(title: "Join a Meet", style: title1Style),
+              SizedBox(height: 2.5.h),
               MyInputField(
-                  title: "Subject Text",
-                  hint: "Enter the subject of dicussion",
-                  controller: subjectText),
+                  title: "Room Code",
+                  hint: "Enter Room Code provided by Host",
+                  controller: roomText),
               const SizedBox(
                 height: 25.0,
               ),
@@ -123,12 +108,9 @@ class _CreateMeetState extends State<CreateMeet> {
               ),
               ElevatedButton(
                 onPressed: () {
-                  setState(() {
-                    roomText = meetCode();
-                  });
                   _joinMeeting();
                 },
-                child: Text("Create Meeting",
+                child: Text("Join Meeting",
                     style: subtitlestyle.copyWith(color: Colors.white)),
                 style: ButtonStyle(
                   shape: MaterialStateProperty.all<RoundedRectangleBorder>(
@@ -193,7 +175,7 @@ class _CreateMeetState extends State<CreateMeet> {
       }
     }
     // Define meetings options here
-    var options = JitsiMeetingOptions(room: roomText)
+    var options = JitsiMeetingOptions(room: roomText.text)
       ..serverURL = serverUrl
       ..subject = subjectText.text
       ..userDisplayName = nameText.text
@@ -204,7 +186,7 @@ class _CreateMeetState extends State<CreateMeet> {
       ..videoMuted = isVideoMuted
       ..featureFlags.addAll(featureFlags)
       ..webOptions = {
-        "roomName": roomText,
+        "roomName": roomText.text,
         "width": "100%",
         "height": "100%",
         "enableWelcomePage": false,

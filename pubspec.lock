@@ -485,6 +485,27 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "5.0.0"
+  jitsi_meet:
+    dependency: "direct main"
+    description:
+      name: jitsi_meet
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "4.0.0"
+  jitsi_meet_platform_interface:
+    dependency: transitive
+    description:
+      name: jitsi_meet_platform_interface
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.0.0"
+  jitsi_meet_web_plugin:
+    dependency: transitive
+    description:
+      name: jitsi_meet_web_plugin
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.0.0"
   jose:
     dependency: transitive
     description:
@@ -723,6 +744,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "3.0.1+1"
+  random_string:
+    dependency: "direct main"
+    description:
+      name: random_string
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.3.1"
   rate_limiter:
     dependency: transitive
     description:

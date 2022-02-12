@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:project_manager_hackathon/config/themes.dart';
+import 'package:sizer/sizer.dart';
 
 class StyledButton extends StatelessWidget {
   const StyledButton({
@@ -25,7 +26,7 @@ class StyledButton extends StatelessWidget {
           ),
         ),
         padding: MaterialStateProperty.all(
-            EdgeInsets.symmetric(horizontal: 25, vertical: 15)),
+            EdgeInsets.symmetric(horizontal: 5.5.w, vertical: 2.h)),
         backgroundColor:
             MaterialStateProperty.all(Themes.primaryColor), // <-- Button color
         overlayColor: MaterialStateProperty.resolveWith<Color?>(
