@@ -30,7 +30,7 @@ class LoginButton extends StatelessWidget {
       onPressed: () {
         final provider =
             Provider.of<GoogleSignInProvider>(context, listen: false);
-        provider.googleLogIn().then((value) => Get.to(LandingPage()));
+        provider.googleLogIn().then((value) => Get.offAll(LandingPage()));
       },
       child: Padding(
         padding: EdgeInsets.symmetric(horizontal: 1.h),

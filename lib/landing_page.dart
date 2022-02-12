@@ -67,7 +67,7 @@ class _LandingPageState extends State<LandingPage> {
             return const Center(child: Text("Error"));
           } else {
             print("user not logged in");
-            return const LoginScreen();
+            return const LandingPage();
           }
         },
       ),
