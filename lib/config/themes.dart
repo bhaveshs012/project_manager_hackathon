@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:sizer/sizer.dart';
 
 class Themes {
   static const lPriorityPrimaryColor = Color(0xffEDF9F5);
@@ -11,15 +12,27 @@ class Themes {
   static const primaryColor = Color(0xff3972F2);
 }
 
-TextStyle get titleStyle {
-  return GoogleFonts.lato(
-    textStyle: const TextStyle(
-        fontSize: 28, fontWeight: FontWeight.bold, color: Colors.black),
+TextStyle get title1Style {
+  return GoogleFonts.raleway(
+    textStyle: TextStyle(
+        fontSize: 25.sp, fontWeight: FontWeight.bold, color: Colors.black),
   );
 }
-TextStyle get subtitlestyle {
-  return GoogleFonts.lato(
-    textStyle: const TextStyle(
-        fontSize: 16, fontWeight: FontWeight.w400, color: Colors.black),
+
+TextStyle get title2Style {
+  return GoogleFonts.raleway(
+    textStyle: TextStyle(
+        fontSize: 20.sp, fontWeight: FontWeight.bold, color: Colors.black),
   );
+}
+
+TextStyle get subtitlestyle {
+  return GoogleFonts.raleway(
+    textStyle: TextStyle(
+        fontSize: 13.sp, fontWeight: FontWeight.w500, color: Colors.black),
+  );
+}
+
+EdgeInsetsGeometry get padding {
+  return EdgeInsets.symmetric(horizontal: 3.w, vertical: 1.5.h);
 }
