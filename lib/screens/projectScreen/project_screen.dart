@@ -1,52 +1,89 @@
 import 'dart:math';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:project_manager_hackathon/config/themes.dart';
+import 'package:project_manager_hackathon/models/projects.dart';
+import 'package:project_manager_hackathon/models/users.dart';
+import 'package:project_manager_hackathon/screens/projectScreen/assign_project_screen.dart';
 import 'package:sizer/sizer.dart';
 
-class projectScreen extends StatelessWidget {
-  const projectScreen({Key? key}) : super(key: key);
-
+class ProjectScreen extends StatelessWidget {
+  ProjectScreen({Key? key, required this.user}) : super(key: key);
+  final Stream<QuerySnapshot> _projectStream =
+      FirebaseFirestore.instance.collection('projects').snapshots();
+  final MyUser user;
+  final fbUser = FirebaseAuth.instance.currentUser;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Padding(
-        padding: padding,
-        child: SafeArea(
-          child: Column(
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text('Hello, Vishesh', style: title2Style),
-                  CircleAvatar(
-                    radius: 30,
-                    backgroundColor: Colors.red,
-                  ),
-                ],
-              ),
-              SizedBox(
-                height: 2.h,
-              ),
-              ProjectCard(
-                title: "Project 01",
-                desc: "This project aims to ensure hardware safety",
-                totaltasks: 20,
-                tasksCompleted: 12,
-                imageNo: Random().nextInt(3) + 1,
-              ),
-              SizedBox(
-                height: 3.h,
-              ),
-              ProjectCard(
-                title: "Project 02",
-                desc: "This project aims to ensure software safety",
-                totaltasks: 10,
-                tasksCompleted: 20,
-                  imageNo: Random().nextInt(3) + 1,
-              ),
-            ],
-          ),
+          padding: padding,
+          child: SafeArea(
+            child: Column(
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text('Hello, Vishesh', style: title2Style),
+                    CircleAvatar(
+                      radius: 30,
+                      backgroundImage: NetworkImage(fbUser!.photoURL.toString()),
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  height: 2.h,
+                ),
+                Expanded(
+                  child: StreamBuilder<QuerySnapshot>(
+                      stream: _projectStream,
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return Center(
+                              child: CircularProgressIndicator(
+                                  color: Themes.primaryColor));
+                        } else if (snapshot.hasData) {
+                          final List projectList = [];
+                          snapshot.data!.docs.map((DocumentSnapshot document) {
+                            Map a = document.data() as Map<String, dynamic>;
+                            projectList.add(a);
+                            a['id'] = document.id;
+                          }).toList();
+                          return ListView.builder(
+                              itemBuilder: (context, index) {
+                                return Container(
+                                  margin: EdgeInsets.symmetric(vertical: 10),
+                                  child: ProjectCard(
+                                    user: user,
+                                    project: Project(
+                                        name: projectList[index]["name"],
+                                        id: projectList[index]["id"],
+                                        image: projectList[index]["image"],
+                                        desc:projectList[index]["desc"]
+                                        ),
+                                  ),
+                                );
+                              },
+                              itemCount: projectList.length);
+                        }
+                        return Container();
+                      }),
+                ),
+              ],
+            ),
+          )),
+      floatingActionButton: Visibility(
+        visible: user.is_admin == true ? true : false,
+        child: FloatingActionButton(
+          backgroundColor: Themes.primaryColor,
+          child: const Icon(Icons.add),
+          onPressed: () {
+            Get.to(() => AssignProject(user: user));
+          },
         ),
       ),
     );
@@ -55,17 +92,10 @@ class projectScreen extends StatelessWidget {
 
 class ProjectCard extends StatelessWidget {
   const ProjectCard({
-    Key? key,
-    required this.title,
-    required this.desc,
-    required this.tasksCompleted,
-    required this.totaltasks, required this.imageNo,
+    Key? key, required this.user, required this.project,
   }) : super(key: key);
-  final String title;
-  final String desc;
-  final int tasksCompleted;
-  final int totaltasks;
-  final int imageNo;
+  final MyUser user;
+  final Project project;
 
   @override
   Widget build(BuildContext context) {
@@ -75,20 +105,21 @@ class ProjectCard extends StatelessWidget {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20),
         image: DecorationImage(
-            image: AssetImage('assets/images/$imageNo.png'), fit: BoxFit.cover),
+            image: AssetImage('assets/images/${project.image}.png'),
+            fit: BoxFit.cover),
       ),
       child: Padding(
         padding: EdgeInsets.symmetric(horizontal: 5.w, vertical: 1.5.h),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(title, style: title2Style),
+            Text(project.name, style: title2Style),
             SizedBox(
               height: 1.h,
             ),
             SizedBox(
               width: 60.w,
-              child: Text(desc,
+              child: Text(project.desc,
                   overflow: TextOverflow.ellipsis,
                   maxLines: 3,
                   style: subtitlestyle),
@@ -98,7 +129,7 @@ class ProjectCard extends StatelessWidget {
             ),
             RichText(
                 text: TextSpan(
-                    text: "$tasksCompleted/$totaltasks tasks",
+                    text: "12/20 tasks",
                     style: subtitlestyle,
                     children: [
                   TextSpan(

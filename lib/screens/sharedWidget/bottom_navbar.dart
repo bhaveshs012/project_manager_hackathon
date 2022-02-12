@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:project_manager_hackathon/models/users.dart';
 import 'package:project_manager_hackathon/screens/projectScreen/project_screen.dart';
 import 'package:project_manager_hackathon/screens/sharedWidget/nav_widget.dart';
 
 class MyCustomBottomNavbar extends StatefulWidget {
-  MyCustomBottomNavbar({Key? key, required this.initailIndex})
+  MyCustomBottomNavbar({Key? key, required this.initailIndex, required this.user})
       : super(key: key);
   final initailIndex;
-  // final MyUser user;
+  final MyUser user;
   @override
   State<MyCustomBottomNavbar> createState() => _MyCustomBottomNavbarState();
 }
@@ -39,7 +40,7 @@ class _MyCustomBottomNavbarState extends State<MyCustomBottomNavbar>
           controller: _tabController,
           //tab pages in correspondence to the navbar
           children: [
-            projectScreen(),
+            ProjectScreen(user: widget.user,),
             Container(),
             Container(),
             Container(),
