@@ -20,8 +20,9 @@ class ProjectScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Padding(
-          padding: padding,
-          child: SafeArea(
+        padding: padding,
+        child: SafeArea(
+          child: SingleChildScrollView(
             child: Column(
               children: [
                 Row(
@@ -30,7 +31,7 @@ class ProjectScreen extends StatelessWidget {
                     Text('Hello, Vishesh', style: title2Style),
                     CircleAvatar(
                       radius: 30,
-                      backgroundImage: NetworkImage(fbUser!.photoURL.toString()),
+         backgroundImage: NetworkImage(fbUser!.photoURL.toString()),
                     ),
                   ],
                 ),
@@ -93,6 +94,7 @@ class ProjectScreen extends StatelessWidget {
 class ProjectCard extends StatelessWidget {
   const ProjectCard({
     Key? key, required this.user, required this.project,
+
   }) : super(key: key);
   final MyUser user;
   final Project project;
@@ -100,7 +102,7 @@ class ProjectCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 20.h,
+      height: 25.h,
       width: double.infinity,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20),

@@ -4,6 +4,7 @@ import 'package:project_manager_hackathon/config/api.dart';
 import 'package:project_manager_hackathon/config/themes.dart';
 import 'package:project_manager_hackathon/screens/chatScreen/team_list.dart';
 import 'package:project_manager_hackathon/screens/sharedWidget/style_button.dart';
+import 'package:project_manager_hackathon/screens/sharedWidget/top_row.dart';
 import 'package:sizer/sizer.dart';
 import 'package:stream_chat_flutter/stream_chat_flutter.dart';
 
@@ -43,14 +44,14 @@ class _ChatInitScreenState extends State<ChatInitScreen> {
           child: SingleChildScrollView(
             child: Column(
               children: [
-                // TopRow(
-                //   title: 'Live Chat',
-                //   style: title2Style,
-                // ),
+                TopRow(
+                  title: 'Live Chat',
+                  style: title2Style,
+                ),
                 SizedBox(height: 1.h),
                 Padding(
                   padding: EdgeInsets.all(25.0),
-                  child: Image.asset("assets/images/chat_logo.gif"),
+                  child: Image.asset("assets/images/chat-logo.gif"),
                 ),
                 SizedBox(height: 3.h),
                 StyledButton(
