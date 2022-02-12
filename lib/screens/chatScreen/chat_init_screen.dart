@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:project_manager_hackathon/screens/sharedWidget/style_button.dart';
 import 'package:stream_chat_flutter/stream_chat_flutter.dart';
 
