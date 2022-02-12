@@ -29,7 +29,7 @@ class _LandingPageState extends State<LandingPage> {
           } else if (snapshot.hasData) {
             final Stream<QuerySnapshot> _userStream = FirebaseFirestore.instance
                 .collection('users')
-                 .where('email', isEqualTo: snapshot.data!.email)
+                .where('email', isEqualTo: snapshot.data!.email)
                 .snapshots();
             return StreamBuilder<QuerySnapshot>(
                 stream: _userStream,
@@ -40,8 +40,7 @@ class _LandingPageState extends State<LandingPage> {
                             color: Themes.primaryColor));
                   } else if (data.data.docs.length == 0) {
                     return AddUserScreen();
-                  } 
-                  else if (data.hasData) {
+                  } else if (data.hasData) {
                     final List userList = [];
                     data.data!.docs.map((DocumentSnapshot document) {
                       Map a = document.data() as Map<String, dynamic>;

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:project_manager_hackathon/config/api.dart';
 import 'package:project_manager_hackathon/config/themes.dart';
+import 'package:project_manager_hackathon/models/users.dart';
 import 'package:project_manager_hackathon/screens/chatScreen/team_list.dart';
 import 'package:project_manager_hackathon/screens/sharedWidget/style_button.dart';
 import 'package:project_manager_hackathon/screens/sharedWidget/top_row.dart';
@@ -9,8 +10,8 @@ import 'package:sizer/sizer.dart';
 import 'package:stream_chat_flutter/stream_chat_flutter.dart';
 
 class ChatInitScreen extends StatefulWidget {
-  const ChatInitScreen({Key? key}) : super(key: key);
-
+  const ChatInitScreen({Key? key, required this.user}) : super(key: key);
+  final MyUser user;
   @override
   State<ChatInitScreen> createState() => _ChatInitScreenState();
 }
@@ -28,7 +29,7 @@ class _ChatInitScreenState extends State<ChatInitScreen> {
   @override
   void initState() {
     // TODO: implement initState
-    client = StreamChatClient(Api.apiKey, logLevel: Level.INFO);
+    client = StreamChatClient(Api.apiKey, logLevel: Level.OFF);
     channel = client
         .channel("messaging", id: "team-01", extraData: {"name": "Team-01"});
     connect();
@@ -58,6 +59,7 @@ class _ChatInitScreenState extends State<ChatInitScreen> {
                   title: "Join Live Chat",
                   onTap: () {
                     Get.to(() => TeamListScreen(
+                          user: widget.user,
                           client: client,
                           channel: channel,
                         ));

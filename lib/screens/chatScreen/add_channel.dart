@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:project_manager_hackathon/config/themes.dart';
+import 'package:project_manager_hackathon/models/users.dart';
 import 'package:project_manager_hackathon/screens/chatScreen/team_list.dart';
 import 'package:project_manager_hackathon/screens/sharedWidget/input_field.dart';
 import 'package:project_manager_hackathon/screens/sharedWidget/style_button.dart';
@@ -9,10 +10,14 @@ import 'package:stream_chat_flutter/stream_chat_flutter.dart';
 
 class CreateChannelScreen extends StatelessWidget {
   const CreateChannelScreen(
-      {Key? key, required this.client, required this.channel})
+      {Key? key,
+      required this.client,
+      required this.channel,
+      required this.user})
       : super(key: key);
   final StreamChatClient client;
   final Channel channel;
+  final MyUser user;
 
   @override
   Widget build(BuildContext context) {
@@ -31,6 +36,7 @@ class CreateChannelScreen extends StatelessWidget {
           icon: Icon(Icons.keyboard_arrow_left),
           onPressed: () {
             Get.offAll(TeamListScreen(
+              user: user,
               channel: channel,
               client: client,
             ));
@@ -58,7 +64,11 @@ class CreateChannelScreen extends StatelessWidget {
                       channelData: {
                         'name': _channelController.text.split(" ").join("-")
                       });
-                  Get.offAll(TeamListScreen(client: client, channel: channel));
+                  Get.offAll(TeamListScreen(
+                    client: client,
+                    channel: channel,
+                    user: user,
+                  ));
                 },
               )
             ],

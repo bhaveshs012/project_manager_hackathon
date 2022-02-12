@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:project_manager_hackathon/controllers/google_signin.dart';
 import 'package:project_manager_hackathon/landing_page.dart';
-import 'package:project_manager_hackathon/screens/sharedWidget/bottom_navbar.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 
@@ -18,8 +17,8 @@ class MyApp extends StatelessWidget {
 
   // This widget is the root of your application.
   @override
-   Widget build(BuildContext context) {
-    //created to initialize provider package                
+  Widget build(BuildContext context) {
+    //created to initialize provider package
     return ChangeNotifierProvider(
         create: (context) => GoogleSignInProvider(),
         builder: (context, _) {
@@ -29,7 +28,7 @@ class MyApp extends StatelessWidget {
               home: LandingPage(),
             );
           });
-        });                                              
+        });
   }
 }
 
