@@ -122,6 +122,8 @@ class _TaskScreenState extends State<TaskScreen> {
                                     return TaskCard(
                                         project: widget.project,
                                         tasks: Task(
+                                          user_id: tasksList[index]['user_id'],
+                                          user_task_id: tasksList[index]['user_task_id'],
                                           id: tasksList[index]['id'],
                                           title: tasksList[index]["name"],
                                           desc: tasksList[index]["desc"],
