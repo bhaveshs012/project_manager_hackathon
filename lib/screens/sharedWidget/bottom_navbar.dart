@@ -18,7 +18,6 @@ class MyCustomBottomNavbar extends StatefulWidget {
 
 class _MyCustomBottomNavbarState extends State<MyCustomBottomNavbar>
     with SingleTickerProviderStateMixin {
-  //controller to manage different tabs of the navbar
   late TabController _tabController;
 
   @override
@@ -56,6 +55,7 @@ class _MyCustomBottomNavbarState extends State<MyCustomBottomNavbar>
           ),
         ],
       ),
+      
     );
   }
 }

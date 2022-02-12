@@ -3,8 +3,8 @@ import 'package:project_manager_hackathon/config/themes.dart';
 import 'package:project_manager_hackathon/screens/loginScreen/widgets/login_button.dart';
 import 'package:sizer/sizer.dart';
 
-class LoginScreen extends StatelessWidget {
-  const LoginScreen({Key? key}) : super(key: key);
+class LandingPage extends StatelessWidget {
+  const LandingPage({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Scaffold(

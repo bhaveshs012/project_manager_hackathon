@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:project_manager_hackathon/controllers/google_signin.dart';
 import 'package:project_manager_hackathon/landing_page.dart';
-import 'package:project_manager_hackathon/screens/introScreen/onboarding_page.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 
@@ -24,7 +23,7 @@ class MyApp extends StatelessWidget {
           return Sizer(builder: (context, orientation, deviceType) {
             return GetMaterialApp(
               debugShowCheckedModeBanner: false,
-              home: OnBoardingPage(),
+              home: LandingPage(),
             );
           });
         });

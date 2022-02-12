@@ -33,6 +33,13 @@ TextStyle get subtitlestyle {
   );
 }
 
+TextStyle get subtitle1Style {
+  return GoogleFonts.raleway(
+    textStyle: TextStyle(
+        fontSize: 18.sp, fontWeight: FontWeight.w600, color: Colors.black),
+  );
+}
+
 EdgeInsetsGeometry get padding {
   return EdgeInsets.symmetric(horizontal: 4.w, vertical: 2.h);
 }

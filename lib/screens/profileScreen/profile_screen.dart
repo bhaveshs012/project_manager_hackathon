@@ -2,11 +2,13 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:pie_chart/pie_chart.dart';
 import 'package:project_manager_hackathon/config/themes.dart';
 import 'package:project_manager_hackathon/controllers/google_signin.dart';
 import 'package:project_manager_hackathon/landing_page.dart';
 import 'package:project_manager_hackathon/models/users.dart';
 import 'package:project_manager_hackathon/screens/sharedWidget/bottom_navbar.dart';
+import 'package:project_manager_hackathon/screens/userAnalytics/analytics.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 
@@ -83,83 +85,163 @@ class ProfileScreen extends StatelessWidget {
           ),
         ],
       ),
-      body: Padding(
-        padding: padding,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Center(
-              child: CircleAvatar(
-                radius: 50,
-                backgroundImage: NetworkImage(fbUser!.photoURL.toString()),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: padding,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Center(
+                child: CircleAvatar(
+                  radius: 40.sp,
+                  backgroundImage: NetworkImage(fbUser!.photoURL.toString()),
+                ),
               ),
-            ),
-            SizedBox(height: 3.h),
-            Text(
-              user.name,
-              style: title1Style,
-            ),
-            SizedBox(height: 1.h),
-            Text(
-              user.post,
-              style: subtitlestyle,
-            ),
-            SizedBox(height: 2.h),
-            Container(
-              padding: EdgeInsets.symmetric(horizontal: 5.w, vertical: 1.h),
-              decoration: BoxDecoration(
-                color: Themes.primaryColor,
-                borderRadius: BorderRadius.all(Radius.circular(15)),
-              ),
-              child: Text(
-                user.department,
-                style: subtitlestyle.copyWith(
-                    color: Colors.white, fontWeight: FontWeight.w600),
-              ),
-            ),
-            SizedBox(height: 3.5.h),
-            Row(
-              children: [
-                Text(
-                  " Task Status",
+              SizedBox(height: 3.h),
+              Center(
+                child: Text(
+                  user.name,
                   style: title2Style,
-                )
-              ],
-            ),
-            SizedBox(height: 2.h),
-            FutureBuilder(
-                future: Future.wait([
-                  _getCompletedTasks(),
-                  _getOnGoingTasks(),
-                  _getInReviewTasks(),
-                ]),
-                builder: (context, AsyncSnapshot<List<dynamic>> snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return Center(
-                        child: CircularProgressIndicator(
-                            color: Themes.primaryColor));
-                  } else if (snapshot.hasData) {
-                    return Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                ),
+              ),
+              SizedBox(height: 1.h),
+              Text(
+                user.post,
+                style: subtitlestyle,
+              ),
+              SizedBox(height: 2.h),
+              Container(
+                padding: EdgeInsets.symmetric(horizontal: 5.w, vertical: 1.h),
+                decoration: BoxDecoration(
+                  color: Themes.primaryColor,
+                  borderRadius: BorderRadius.all(Radius.circular(15)),
+                ),
+                child: Text(
+                  user.department,
+                  style: subtitlestyle.copyWith(
+                      color: Colors.white, fontWeight: FontWeight.w600),
+                ),
+              ),
+              SizedBox(height: 3.5.h),
+              user.is_admin == false
+                  ? Column(
                       children: [
-                        ProjectStatus(
-                          title: "Completed",
-                          value: snapshot.data![0],
+                        Text(
+                          " Task Status",
+                          style: title2Style,
                         ),
-                        ProjectStatus(
-                          title: "On Going",
-                          value: snapshot.data![1],
-                        ),
-                        ProjectStatus(
-                          title: "In Review",
-                          value: snapshot.data![2],
-                        ),
+                        SizedBox(height: 2.h),
+                        FutureBuilder(
+                            future: Future.wait([
+                              _getCompletedTasks(),
+                              _getOnGoingTasks(),
+                              _getInReviewTasks(),
+                            ]),
+                            builder: (context,
+                                AsyncSnapshot<List<dynamic>> snapshot) {
+                              if (snapshot.connectionState ==
+                                  ConnectionState.waiting) {
+                                return Center(
+                                    child: CircularProgressIndicator(
+                                        color: Themes.primaryColor));
+                              } else if (snapshot.hasData) {
+                                Map<String, double> dataMap = {
+                                  "Completed": snapshot.data![0].toDouble(),
+                                  "On Going": snapshot.data![1].toDouble(),
+                                  "In Review": snapshot.data![2].toDouble(),
+                                };
+                                return Column(
+                                  children: [
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceAround,
+                                      children: [
+                                        ProjectStatus(
+                                          title: "Completed",
+                                          value: snapshot.data![0],
+                                        ),
+                                        ProjectStatus(
+                                            title: "On Going",
+                                            value: snapshot.data![1]),
+                                        ProjectStatus(
+                                            title: "In Review",
+                                            value: snapshot.data![2]),
+                                      ],
+                                    ),
+                                    SizedBox(height: 4.h),
+                                    PieChart(
+                                      dataMap: dataMap,
+                                      animationDuration:
+                                          Duration(milliseconds: 800),
+                                      chartLegendSpacing: 32,
+                                      chartRadius:
+                                          MediaQuery.of(context).size.width /
+                                              3.2,
+                                      colorList: [
+                                        Colors.green,
+                                        Colors.orange,
+                                        Colors.red
+                                      ],
+                                      initialAngleInDegree: 0,
+                                      chartType: ChartType.ring,
+                                      ringStrokeWidth: 32,
+                                      legendOptions: LegendOptions(
+                                        showLegendsInRow: false,
+                                        legendPosition: LegendPosition.right,
+                                        showLegends: true,
+                                        legendShape: BoxShape.circle,
+                                        legendTextStyle: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                      chartValuesOptions: ChartValuesOptions(
+                                        showChartValueBackground: true,
+                                        showChartValues: true,
+                                        showChartValuesInPercentage: false,
+                                        showChartValuesOutside: false,
+                                        decimalPlaces: 0,
+                                      ),
+                                      // gradientList: ---To add gradient colors---
+                                      // emptyColorGradient: ---Empty Color gradient---
+                                    )
+                                  ],
+                                );
+                              }
+                              return Container();
+                            }),
                       ],
-                    );
-                  }
-                  return Container();
-                })
-          ],
+                    )
+                  : GestureDetector(
+                      onTap: () {
+                        Get.to(Analytics());
+                      },
+                      child: Container(
+                        height: 7.h,
+                        width: 30.h,
+                        decoration: BoxDecoration(
+                            color: Themes.lPrioritySecondaryColor,
+                            borderRadius: BorderRadius.circular(20.sp)),
+                        child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                'View Analytics',
+                                style:
+                                    subtitlestyle.copyWith(color: Colors.white),
+                              ),
+                              SizedBox(
+                                width: 3.w,
+                              ),
+                              Icon(
+                                Icons.trending_up,
+                                color: Colors.white,
+                                size: 20.sp,
+                              )
+                            ]),
+                      ),
+                    )
+            ],
+          ),
         ),
       ),
     );

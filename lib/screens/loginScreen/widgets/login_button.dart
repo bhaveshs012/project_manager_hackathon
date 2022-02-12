@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:project_manager_hackathon/config/themes.dart';
 import 'package:project_manager_hackathon/controllers/google_signin.dart';
+import 'package:project_manager_hackathon/landing_page.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 
@@ -28,7 +30,8 @@ class LoginButton extends StatelessWidget {
       onPressed: () {
         final provider =
             Provider.of<GoogleSignInProvider>(context, listen: false);
-        provider.googleLogIn();
+        provider.googleLogIn().then((value) => Get.offAll(LandingPage()));
+        
       },
       child: Padding(
         padding: EdgeInsets.symmetric(horizontal: 1.h),

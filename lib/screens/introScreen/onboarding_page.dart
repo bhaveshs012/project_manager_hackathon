@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:introduction_screen/introduction_screen.dart';
 import 'package:project_manager_hackathon/config/themes.dart';
-
-import 'package:project_manager_hackathon/landing_page.dart';
 import 'package:project_manager_hackathon/screens/introScreen/widgets/button_widgets.dart';
 import 'package:project_manager_hackathon/screens/loginScreen/login_screen.dart';
 import 'package:sizer/sizer.dart';
@@ -68,7 +66,9 @@ class OnBoardingPage extends StatelessWidget {
               ),
               footer: ButtonWidget(
                 text: 'Get Started',
-                onClicked: () => Get.to(LoginScreen()),
+                onClicked: () {
+                  Get.to(LandingPage());
+                },
               ),
               image: buildImage('assets/images/on_board/4.png'),
               decoration: getPageDecoration(),
@@ -76,12 +76,12 @@ class OnBoardingPage extends StatelessWidget {
           ],
           done:
               Text('Done', style: subtitlestyle.copyWith(color: Colors.white)),
-          onDone: () => Get.to(LoginScreen()),
+          onDone: () => Get.to(LandingPage()),
           showSkipButton: true,
           skip: Center(
               child: Text('Skip',
                   style: subtitlestyle.copyWith(color: Colors.white))),
-          onSkip: () => Get.to(LoginScreen()),
+          onSkip: () => Get.to(LandingPage()),
           next: Icon(
             Icons.arrow_forward,
             color: Colors.white,
@@ -119,4 +119,3 @@ class OnBoardingPage extends StatelessWidget {
         pageColor: Colors.white,
       );
 }
-
