@@ -117,7 +117,10 @@ class _CreateMeetState extends State<CreateMeet> {
                 height: 25.0,
               ),
               MyInputField(
-                  title: "Name", hint: "Enter your name", controller: nameText),
+                title: "Name",
+                hint: "Enter your name",
+                controller: nameText,
+              ),
               const SizedBox(
                 height: 30.0,
               ),
@@ -126,6 +129,7 @@ class _CreateMeetState extends State<CreateMeet> {
                   setState(() {
                     roomText = meetCode();
                   });
+
                   _joinMeeting();
                 },
                 child: Text("Create Meeting",
