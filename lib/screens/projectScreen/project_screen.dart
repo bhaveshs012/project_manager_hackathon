@@ -13,39 +13,41 @@ class projectScreen extends StatelessWidget {
       body: Padding(
         padding: padding,
         child: SafeArea(
-          child: Column(
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text('Hello, Vishesh', style: title2Style),
-                  CircleAvatar(
-                    radius: 30,
-                    backgroundColor: Colors.red,
-                  ),
-                ],
-              ),
-              SizedBox(
-                height: 2.h,
-              ),
-              ProjectCard(
-                title: "Project 01",
-                desc: "This project aims to ensure hardware safety",
-                totaltasks: 20,
-                tasksCompleted: 12,
-                imageNo: Random().nextInt(3) + 1,
-              ),
-              SizedBox(
-                height: 3.h,
-              ),
-              ProjectCard(
-                title: "Project 02",
-                desc: "This project aims to ensure software safety",
-                totaltasks: 10,
-                tasksCompleted: 20,
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text('Hello, Vishesh', style: title2Style),
+                    CircleAvatar(
+                      radius: 30,
+                      backgroundColor: Colors.red,
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  height: 2.h,
+                ),
+                ProjectCard(
+                  title: "Project 01",
+                  desc: "This project aims to ensure hardware safety",
+                  totaltasks: 20,
+                  tasksCompleted: 12,
                   imageNo: Random().nextInt(3) + 1,
-              ),
-            ],
+                ),
+                SizedBox(
+                  height: 3.h,
+                ),
+                ProjectCard(
+                  title: "Project 02",
+                  desc: "This project aims to ensure software safety",
+                  totaltasks: 10,
+                  tasksCompleted: 20,
+                  imageNo: Random().nextInt(3) + 1,
+                ),
+              ],
+            ),
           ),
         ),
       ),
@@ -59,7 +61,8 @@ class ProjectCard extends StatelessWidget {
     required this.title,
     required this.desc,
     required this.tasksCompleted,
-    required this.totaltasks, required this.imageNo,
+    required this.totaltasks,
+    required this.imageNo,
   }) : super(key: key);
   final String title;
   final String desc;
@@ -70,7 +73,7 @@ class ProjectCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 20.h,
+      height: 25.h,
       width: double.infinity,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20),
