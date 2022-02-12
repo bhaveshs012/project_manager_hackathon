@@ -7,6 +7,8 @@ class MyUser {
   final bool? is_admin;
   final String id;
 
+
+
   MyUser(
       {required this.name,
       required this.department,

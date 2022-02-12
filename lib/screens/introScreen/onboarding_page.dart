@@ -67,7 +67,7 @@ class OnBoardingPage extends StatelessWidget {
               footer: ButtonWidget(
                 text: 'Get Started',
                 onClicked: () {
-                  Get.to(LandingPage());
+                  Get.to(LoginScreen());
                 },
               ),
               image: buildImage('assets/images/on_board/4.png'),
@@ -76,12 +76,12 @@ class OnBoardingPage extends StatelessWidget {
           ],
           done:
               Text('Done', style: subtitlestyle.copyWith(color: Colors.white)),
-          onDone: () => Get.to(LandingPage()),
+          onDone: () => Get.to(LoginScreen()),
           showSkipButton: true,
           skip: Center(
               child: Text('Skip',
                   style: subtitlestyle.copyWith(color: Colors.white))),
-          onSkip: () => Get.to(LandingPage()),
+          onSkip: () => Get.to(LoginScreen()),
           next: Icon(
             Icons.arrow_forward,
             color: Colors.white,

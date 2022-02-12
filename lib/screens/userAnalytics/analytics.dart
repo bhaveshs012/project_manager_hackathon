@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:project_manager_hackathon/config/themes.dart';
+import 'package:project_manager_hackathon/screens/userAnalytics/widgets/task_analytics.dart';
 import 'package:project_manager_hackathon/screens/userAnalytics/widgets/user_analytics.dart';
 
 class Analytics extends StatefulWidget {
@@ -26,7 +27,7 @@ class _AnalyticsState extends State<Analytics> {
         ),
         body: TabBarView(children: [
           UserAnalytics(),
-          Text("Tasks"),
+          TaskAnalysis()
         ]),
       ),
     );

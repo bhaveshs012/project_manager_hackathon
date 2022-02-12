@@ -1,10 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:project_manager_hackathon/config/themes.dart';
 import 'package:project_manager_hackathon/models/users.dart';
 import 'package:project_manager_hackathon/screens/addUser/add_user_screen.dart';
 import 'package:project_manager_hackathon/screens/loginScreen/login_screen.dart';
+import 'package:project_manager_hackathon/screens/loginScreen/widgets/login_button.dart';
 import 'package:project_manager_hackathon/screens/sharedWidget/bottom_navbar.dart';
 
 class LandingPage extends StatefulWidget {
@@ -67,7 +69,7 @@ class _LandingPageState extends State<LandingPage> {
             return const Center(child: Text("Error"));
           } else {
             print("user not logged in");
-            return const LandingPage();
+            return const LoginScreen();
           }
         },
       ),
