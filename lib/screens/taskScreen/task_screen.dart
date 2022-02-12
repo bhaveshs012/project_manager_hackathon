@@ -9,6 +9,7 @@ import 'package:project_manager_hackathon/models/tasks.dart';
 import 'package:project_manager_hackathon/models/users.dart';
 import 'package:project_manager_hackathon/screens/sharedWidget/bottom_navbar.dart';
 import 'package:project_manager_hackathon/screens/taskScreen/assign_task.dart';
+import 'package:project_manager_hackathon/screens/taskScreen/widgets/priority_indicator.dart';
 import 'package:project_manager_hackathon/screens/taskScreen/widgets/task_card.dart';
 
 class TaskScreen extends StatefulWidget {
@@ -177,30 +178,3 @@ class _TaskScreenState extends State<TaskScreen> {
   }
 }
 
-class PriorityIndicator extends StatelessWidget {
-  const PriorityIndicator({
-    Key? key,
-    required this.priority,
-    required this.color,
-  }) : super(key: key);
-  final String priority;
-  final Color color;
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Container(
-          margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
-          width: 15,
-          height: 15,
-          decoration: BoxDecoration(shape: BoxShape.circle, color: color),
-        ),
-        Text(
-          priority,
-          style: subtitlestyle.copyWith(fontSize: 15),
-        )
-      ],
-    );
-  }
-}

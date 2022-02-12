@@ -4,6 +4,7 @@ import 'package:intl/intl.dart';
 import 'package:project_manager_hackathon/config/themes.dart';
 import 'package:project_manager_hackathon/models/tasks.dart';
 import 'package:project_manager_hackathon/models/users.dart';
+import 'package:sizer/sizer.dart';
 
 class TaskCard extends StatelessWidget {
   const TaskCard({
@@ -47,7 +48,7 @@ class TaskCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Container(
-                  margin: const EdgeInsets.only(top: 10, right: 15),
+                  margin: EdgeInsets.symmetric(vertical: 1.h, horizontal: 1.w),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -87,6 +88,7 @@ class TaskCard extends StatelessWidget {
                   margin: const EdgeInsets.only(right: 5),
                   child: Text(
                     tasks.desc,
+                    overflow: TextOverflow.ellipsis,
                     style: subtitlestyle,
                   ),
                 )

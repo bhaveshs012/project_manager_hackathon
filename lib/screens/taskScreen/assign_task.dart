@@ -161,7 +161,8 @@ class _AssignTaskState extends State<AssignTask> {
                         "deadline": _selectedDate,
                         "priority": _selectedPriority,
                         "start_date": DateTime.now(),
-                        "email": _selectedEmail
+                        "email": _selectedEmail,
+                        "status" : "ongoing",
                       }).then((value) {
                         if (kDebugMode) {
                           print("task added");
