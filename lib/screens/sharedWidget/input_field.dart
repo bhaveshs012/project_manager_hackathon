@@ -42,19 +42,21 @@ class MyInputField extends StatelessWidget {
                     controller: controller,
                     style: subtitlestyle.copyWith(color: Colors.black54),
                     decoration: InputDecoration(
-                      labelText: hint,
-                      enabled: widget == null ? true : false,
-                      enabledBorder: OutlineInputBorder(
-                        borderSide:
-                            BorderSide(width: 1.3, color: Colors.black45),
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide:
-                            BorderSide(width: 3, color: Themes.primaryColor),
-                        borderRadius: BorderRadius.circular(15),
-                      ),
-                    ),
+
+                        labelText: hint,
+                        enabled: widget == null ? true : false,
+                        enabledBorder: OutlineInputBorder(
+                          borderSide:
+                              BorderSide(width: 1.3, color: Colors.black45),
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide:
+                              BorderSide(width: 3, color: Themes.primaryColor),
+                          borderRadius: BorderRadius.circular(15),
+                        )),
+
+                    
                   ),
                 ),
                 widget == null
@@ -70,3 +72,4 @@ class MyInputField extends StatelessWidget {
     );
   }
 }
+

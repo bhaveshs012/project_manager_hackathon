@@ -4,10 +4,10 @@ import 'package:project_manager_hackathon/screens/projectScreen/project_screen.d
 import 'package:project_manager_hackathon/screens/sharedWidget/nav_widget.dart';
 
 class MyCustomBottomNavbar extends StatefulWidget {
-  MyCustomBottomNavbar({Key? key, required this.initailIndex})
+  MyCustomBottomNavbar({Key? key, required this.initailIndex, required this.user})
       : super(key: key);
   final initailIndex;
-  // final MyUser user;
+  final MyUser user;
   @override
   State<MyCustomBottomNavbar> createState() => _MyCustomBottomNavbarState();
 }
