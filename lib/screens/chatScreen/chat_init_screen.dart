@@ -21,8 +21,8 @@ class _ChatInitScreenState extends State<ChatInitScreen> {
   late StreamChatClient client;
 
   void connect() async {
-    await client.connectUser(
-        User(id: "bhaveshs012"), client.devToken("bhaveshs012").rawValue);
+    await client.connectUser(User(id: widget.user.name.split(" ").first),
+        client.devToken(widget.user.name.split(" ").first).rawValue);
     await channel.watch();
   }
 
@@ -39,6 +39,7 @@ class _ChatInitScreenState extends State<ChatInitScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       body: SafeArea(
         child: Padding(
           padding: padding,

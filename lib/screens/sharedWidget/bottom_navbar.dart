@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:project_manager_hackathon/models/users.dart';
 import 'package:project_manager_hackathon/screens/chatScreen/chat_init_screen.dart';
+import 'package:project_manager_hackathon/screens/meetScreen/meet_init_screen.dart';
 import 'package:project_manager_hackathon/screens/projectScreen/project_screen.dart';
 import 'package:project_manager_hackathon/screens/sharedWidget/nav_widget.dart';
 
 class MyCustomBottomNavbar extends StatefulWidget {
-  MyCustomBottomNavbar({Key? key, required this.initailIndex, required this.user})
+  MyCustomBottomNavbar(
+      {Key? key, required this.initailIndex, required this.user})
       : super(key: key);
   final initailIndex;
   final MyUser user;
@@ -18,14 +20,14 @@ class _MyCustomBottomNavbarState extends State<MyCustomBottomNavbar>
   //controller to manage different tabs of the navbar
   late TabController _tabController;
 
-  
-    @override
+  @override
   void initState() {
     super.initState();
-    
+
     _tabController = TabController(
         length: 4, vsync: this, initialIndex: widget.initailIndex);
   }
+
   @override
   void dispose() {
     super.dispose();
@@ -41,9 +43,13 @@ class _MyCustomBottomNavbarState extends State<MyCustomBottomNavbar>
           controller: _tabController,
           //tab pages in correspondence to the navbar
           children: [
-            ProjectScreen(user: widget.user,),
-            ChatInitScreen(user: widget.user,),
-            Container(),
+            ProjectScreen(
+              user: widget.user,
+            ),
+            ChatInitScreen(
+              user: widget.user,
+            ),
+            MeetScreen(),
             Container(),
           ],
         ));
