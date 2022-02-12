@@ -25,12 +25,12 @@ class _TaskScreenState extends State<TaskScreen> {
   DateTime _selectedDate = DateTime.now();
   @override
   Widget build(BuildContext context) {
-    print("name is ${widget.user.name}");
     final Stream<QuerySnapshot> _taskStream = FirebaseFirestore.instance
         .collection('projects')
         .doc(widget.project.id)
         .collection('tasks')
         .where('deadline', isGreaterThanOrEqualTo: _selectedDate)
+        .where('user_id', isEqualTo: widget.user.id)
         .snapshots();
     print(_selectedDate);
     return Scaffold(
@@ -39,8 +39,8 @@ class _TaskScreenState extends State<TaskScreen> {
         elevation: 0,
         leading: IconButton(
           icon: const Icon(Icons.keyboard_arrow_left),
-          onPressed: () => Get.offAll(() =>
-                MyCustomBottomNavbar(initailIndex: 0, user: widget.user)),
+          onPressed: () => Get.offAll(
+              () => MyCustomBottomNavbar(initailIndex: 0, user: widget.user)),
           color: Colors.black,
         ),
         title: const Text(
@@ -108,25 +108,31 @@ class _TaskScreenState extends State<TaskScreen> {
                                   child: CircularProgressIndicator(
                                       color: Themes.primaryColor));
                             } else if (snapshot.hasData) {
+                              print(snapshot.data!.docs.length);
                               final List tasksList = [];
                               snapshot.data!.docs
                                   .map((DocumentSnapshot document) {
                                 Map a = document.data() as Map<String, dynamic>;
-                                if (a["email"] == widget.user.email)
-                                  tasksList.add(a);
+                                tasksList.add(a);
                                 a['id'] = document.id;
                               }).toList();
                               return ListView.builder(
                                   itemCount: tasksList.length,
                                   itemBuilder: ((context, index) {
                                     return TaskCard(
+                                        project: widget.project,
                                         tasks: Task(
+                                          id: tasksList[index]['id'],
                                           title: tasksList[index]["name"],
                                           desc: tasksList[index]["desc"],
                                           priority: tasksList[index]
                                               ["priority"],
                                           deadline: DateTime.parse(
                                               tasksList[index]["deadline"]
+                                                  .toDate()
+                                                  .toString()),
+                                          startDate: DateTime.parse(
+                                              tasksList[index]["start_date"]
                                                   .toDate()
                                                   .toString()),
                                         ),
@@ -152,9 +158,9 @@ class _TaskScreenState extends State<TaskScreen> {
         onPressed: () {
           print("${widget.user.is_admin} nameee");
           Get.to(() => AssignTask(
-            user: widget.user,
-            project: widget.project,
-          ));
+                user: widget.user,
+                project: widget.project,
+              ));
         },
       ),
     );
@@ -177,4 +183,3 @@ class _TaskScreenState extends State<TaskScreen> {
     );
   }
 }
-

@@ -25,10 +25,12 @@ class _AssignTaskState extends State<AssignTask> {
   String? _selectedUser = "Select User";
   List<String> priorityList = ["high", "medium", "low"];
   String _selectedPriority = "Select Priority";
-  String? _selectedEmail = "Select email";
+  String? _selectedId = "Select email";
 
   final CollectionReference _userReference =
       FirebaseFirestore.instance.collection('users');
+
+
   final TextEditingController _taskNameController = TextEditingController();
   final TextEditingController _taskDescriptionController =
       TextEditingController();
@@ -36,7 +38,7 @@ class _AssignTaskState extends State<AssignTask> {
     _userReference.get().then((value) {
       List<Map<String, String>> users = [];
       for (var element in value.docs) {
-        users.add({"name": element['name'], "email": element["email"]});
+        users.add({"name": element['name'], "id": element.id});
       }
       setState(() {
         usersList = users;
@@ -53,6 +55,8 @@ class _AssignTaskState extends State<AssignTask> {
 
   @override
   Widget build(BuildContext context) {
+      final CollectionReference _userTaskReference =
+      FirebaseFirestore.instance.collection('users').doc(_selectedId).collection('tasks');
     final CollectionReference _taskReference = FirebaseFirestore.instance
         .collection('projects')
         .doc(widget.project.id)
@@ -130,15 +134,15 @@ class _AssignTaskState extends State<AssignTask> {
                     widget: DropdownButton(
                       onChanged: ((value) => setState(() {
                             for (var element in usersList) {
-                              if (element["email"] == value.toString()) {
-                                _selectedEmail = element["email"];
+                              if(element["id"] == value.toString()) {
+                                _selectedId = element["id"];
                                 _selectedUser = element["name"];
                               }
                             }
                           })),
                       items: usersList.map<DropdownMenuItem<String>>((user) {
                         return DropdownMenuItem<String>(
-                          value: user['email'],
+                          value: user["id"],
                           child: Text(user['name'].toString()),
                         );
                       }).toList(),
@@ -161,13 +165,21 @@ class _AssignTaskState extends State<AssignTask> {
                         "deadline": _selectedDate,
                         "priority": _selectedPriority,
                         "start_date": DateTime.now(),
-                        "email": _selectedEmail,
-                        "status" : "ongoing",
-                      }).then((value) {
-                        if (kDebugMode) {
-                          print("task added");
+                        "user_id": _selectedId,
+                        "status": "ongoing",
+                      });
+                      _userTaskReference.add(
+                        {
+                     "name": _taskNameController.text,
+                        "desc": _taskDescriptionController.text,
+                        "deadline": _selectedDate,
+                        "priority": _selectedPriority,
+                        "start_date": DateTime.now(),
+                        "user_id": _selectedId,
+                        "status": "ongoing",
                         }
-                        Get.off(TaskScreen(
+                      ).then((value) {
+                        Get.offAll(TaskScreen(
                           user: widget.user,
                           project: widget.project,
                         ));

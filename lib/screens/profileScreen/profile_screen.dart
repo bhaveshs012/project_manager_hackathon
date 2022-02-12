@@ -1,9 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 import 'package:project_manager_hackathon/config/themes.dart';
 import 'package:project_manager_hackathon/controllers/google_signin.dart';
+import 'package:project_manager_hackathon/landing_page.dart';
 import 'package:project_manager_hackathon/models/users.dart';
 import 'package:project_manager_hackathon/screens/sharedWidget/bottom_navbar.dart';
 import 'package:provider/provider.dart';
@@ -13,6 +14,38 @@ class ProfileScreen extends StatelessWidget {
   ProfileScreen({Key? key, required this.user}) : super(key: key);
   final fbUser = FirebaseAuth.instance.currentUser;
   final MyUser user;
+  Future<int> _getCompletedTasks() async {
+    QuerySnapshot qSnap = await FirebaseFirestore.instance
+        .collection('users')
+        .doc(user.id)
+        .collection("tasks")
+        .where("status", isEqualTo: "completed")
+        .get();
+    if (qSnap.docs.isEmpty) return 0;
+    return qSnap.docs.length;
+  }
+
+  Future<int> _getOnGoingTasks() async {
+    QuerySnapshot qSnap = await FirebaseFirestore.instance
+        .collection('users')
+        .doc(user.id)
+        .collection("tasks")
+        .where("status", isEqualTo: "ongoing")
+        .get();
+    if (qSnap.docs.isEmpty) return 0;
+    return qSnap.docs.length;
+  }
+
+  Future<int> _getInReviewTasks() async {
+    QuerySnapshot qSnap = await FirebaseFirestore.instance
+        .collection('users')
+        .doc(user.id)
+        .collection("tasks")
+        .where("status", isEqualTo: "in_review")
+        .get();
+    if (qSnap.docs.isEmpty) return 0;
+    return qSnap.docs.length;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -45,6 +78,7 @@ class ProfileScreen extends StatelessWidget {
               final provider =
                   Provider.of<GoogleSignInProvider>(context, listen: false);
               provider.GoogleLogOut();
+              Get.offAll(LandingPage());
             },
           ),
         ],
@@ -93,23 +127,38 @@ class ProfileScreen extends StatelessWidget {
               ],
             ),
             SizedBox(height: 2.h),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                ProjectStatus(
-                  title: "Completed",
-                  value: 0,
-                ),
-                ProjectStatus(
-                  title: "On Going",
-                  value: 0,
-                ),
-                ProjectStatus(
-                  title: "In Review",
-                  value: 0,
-                ),
-              ],
-            )
+            FutureBuilder(
+                future: Future.wait([
+                  _getCompletedTasks(),
+                  _getOnGoingTasks(),
+                  _getInReviewTasks(),
+                ]),
+                builder: (context, AsyncSnapshot<List<dynamic>> snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return Center(
+                        child: CircularProgressIndicator(
+                            color: Themes.primaryColor));
+                  } else if (snapshot.hasData) {
+                    return Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        ProjectStatus(
+                          title: "Completed",
+                          value: snapshot.data![0],
+                        ),
+                        ProjectStatus(
+                          title: "On Going",
+                          value: snapshot.data![1],
+                        ),
+                        ProjectStatus(
+                          title: "In Review",
+                          value: snapshot.data![2],
+                        ),
+                      ],
+                    );
+                  }
+                  return Container();
+                })
           ],
         ),
       ),

@@ -49,8 +49,10 @@ class ProjectScreen extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text('Hello, ${user.name.capitalize}',
-                        style: title2Style, overflow: TextOverflow.ellipsis),
+                    Flexible(
+                      child: Text('Hello, ${user.name.capitalize}',
+                          style: title2Style, overflow: TextOverflow.ellipsis),
+                    ),
                     CircleAvatar(
                       radius: 30,
                       backgroundImage:
@@ -119,7 +121,6 @@ class ProjectScreen extends StatelessWidget {
                                             child: CircularProgressIndicator(
                                                 color: Themes.primaryColor));
                                       } else if (snapshot.hasData) {
-                                        print("data hau");
                                         return Container(
                                           margin: EdgeInsets.symmetric(
                                               vertical: 10),
@@ -153,68 +154,3 @@ class ProjectScreen extends StatelessWidget {
     );
   }
 }
-
-class ProjectCard extends StatelessWidget {
-  const ProjectCard({
-    Key? key,
-    required this.user,
-    required this.project,
-  }) : super(key: key);
-  final MyUser user;
-  final Project project;
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        Get.to(() => TaskScreen(user: user, project: project));
-      },
-      child: Container(
-        height: 22.h,
-        width: double.infinity,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(20),
-          image: DecorationImage(
-              image: AssetImage('assets/images/${project.image}.png'),
-              fit: BoxFit.cover),
-        ),
-        child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 5.w, vertical: 1.5.h),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(project.name, style: title2Style),
-              SizedBox(
-                height: 1.h,
-              ),
-              SizedBox(
-                width: 60.w,
-                child: Text(project.desc,
-                    overflow: TextOverflow.ellipsis,
-                    maxLines: 3,
-                    style: subtitlestyle),
-              ),
-              SizedBox(
-                height: 3.h,
-              ),
-              RichText(
-                  text: TextSpan(
-                      text: "12/20 tasks",
-                      style: subtitlestyle,
-                      children: [
-                    TextSpan(
-                      text: "  70%",
-                      style: subtitlestyle.copyWith(
-                          color: Colors.green,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 15.sp),
-                    )
-                  ]))
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-}
-
