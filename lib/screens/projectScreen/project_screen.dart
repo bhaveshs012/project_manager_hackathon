@@ -16,14 +16,27 @@ class ProjectScreen extends StatelessWidget {
 
   final MyUser user;
   final fbUser = FirebaseAuth.instance.currentUser;
-  Future<int> _getTotalTasks(String id) async{
-  QuerySnapshot qSnap = await FirebaseFirestore.instance.collection('projects').doc(id).collection("tasks").get();
- return qSnap.docs.length; 
+  Future<int> _getTotalTasks(String id) async {
+    QuerySnapshot qSnap = await FirebaseFirestore.instance
+        .collection('projects')
+        .doc(id)
+        .collection("tasks")
+        .get();
+    if (qSnap.docs.isEmpty) return 0;
+    return qSnap.docs.length;
   }
-    Future<int> _getTasksDone(String id) async{
-  QuerySnapshot qSnap = await FirebaseFirestore.instance.collection('projects').doc(id).collection("tasks").where("status",isEqualTo: "completed").get();
-    return qSnap.docs.length; 
+
+  Future<int> _getTasksDone(String id) async {
+    QuerySnapshot qSnap = await FirebaseFirestore.instance
+        .collection('projects')
+        .doc(id)
+        .collection("tasks")
+        .where("status", isEqualTo: "completed")
+        .get();
+    if (qSnap.docs.isEmpty) return 0;
+    return qSnap.docs.length;
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -93,35 +106,40 @@ class ProjectScreen extends StatelessWidget {
                           return ListView.builder(
                               itemBuilder: (context, index) {
                                 return FutureBuilder(
-                                  future: Future.wait([
-                                    _getTotalTasks(projectList[index]['id']),
-                                    _getTasksDone(projectList[index]['id']),
-                                  ]),   
-                                  builder: (context, AsyncSnapshot<List<dynamic>> snapshot) {
-                                     if (snapshot.connectionState ==
-                            ConnectionState.waiting) {
-                            return Center(
-                                 child: CircularProgressIndicator(
-                                  color: Themes.primaryColor));
-                            } else if (snapshot.hasData) {
-                                    return Container(
-                                      margin: EdgeInsets.symmetric(vertical: 10),
-                                      child: ProjectCard(
-                                        user: user,
-                                        project: Project(
-                                            name: projectList[index]["name"],
-                                            id: projectList[index]["id"],
-                                            image: projectList[index]["image"],
-                                            desc: projectList[index]["desc"],
-                                            totalTasks: snapshot.data![0],
-                                            taskCompleted: snapshot.data![1]),
-                                      ),
-                                    );
-                                  }
-                                     return Container();
-                                  }
-                               
-                                );
+                                    future: Future.wait([
+                                      _getTotalTasks(projectList[index]['id']),
+                                      _getTasksDone(projectList[index]['id']),
+                                    ]),
+                                    builder: (context,
+                                        AsyncSnapshot<List<dynamic>> snapshot) {
+                                      if (snapshot.connectionState ==
+                                          ConnectionState.waiting) {
+                                        return Center(
+                                            child: CircularProgressIndicator(
+                                                color: Themes.primaryColor));
+                                      } else if (snapshot.hasData) {
+                                        print("data hau");
+                                        return Container(
+                                          margin: EdgeInsets.symmetric(
+                                              vertical: 10),
+                                          child: ProjectCard(
+                                            user: user,
+                                            project: Project(
+                                                name: projectList[index]
+                                                    ["name"],
+                                                id: projectList[index]["id"],
+                                                image: projectList[index]
+                                                    ["image"],
+                                                desc: projectList[index]
+                                                    ["desc"],
+                                                totalTasks: snapshot.data![0],
+                                                taskCompleted:
+                                                    snapshot.data![1]),
+                                          ),
+                                        );
+                                      }
+                                      return Container();
+                                    });
                               },
                               itemCount: projectList.length);
                         }
@@ -134,4 +152,3 @@ class ProjectScreen extends StatelessWidget {
     );
   }
 }
-

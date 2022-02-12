@@ -22,7 +22,7 @@ class ProjectCard extends StatelessWidget {
         Get.to(() => TaskScreen(user: user, project: project));
       },
       child: Container(
-        height: 20.h,
+        height: 22.h,
         width: double.infinity,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(20),
@@ -56,7 +56,9 @@ class ProjectCard extends StatelessWidget {
                       style: subtitlestyle,
                       children: [
                     TextSpan(
-                      text: "  ${((project.taskCompleted!/project.totalTasks) * 100).toInt()}%",
+                      text: project.totalTasks != 0
+                          ? "  ${((project.taskCompleted / project.totalTasks) * 100).toInt()}%"
+                          : "  0%",
                       style: subtitlestyle.copyWith(
                           color: Colors.green,
                           fontWeight: FontWeight.bold,

@@ -23,7 +23,7 @@ class LoginButton extends StatelessWidget {
       shape: RoundedRectangleBorder(
         borderRadius: new BorderRadius.circular(30.0),
       ),
-      color: Themes.primaryColor,
+      color: Colors.white,
       padding: EdgeInsets.all(0.8.h),
       onPressed: () {
         final provider =
@@ -33,8 +33,15 @@ class LoginButton extends StatelessWidget {
       child: Padding(
         padding: EdgeInsets.symmetric(horizontal: 1.h),
         child: ListTile(
-            title: Text('Login with Google',
-                textAlign: TextAlign.center, style: title1Style)),
+          leading: Image.asset(
+            'assets/logos/google-logo.png',
+            height: 12.h,
+            width: 12.w,
+          ),
+          title: Text('Login with Google',
+              textAlign: TextAlign.center,
+              style: title2Style.copyWith(color: Themes.primaryColor)),
+        ),
       ),
     );
   }
