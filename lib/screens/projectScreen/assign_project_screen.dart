@@ -65,7 +65,7 @@ class _AssignProjectState extends State<AssignProject> {
                 _projectReference.add({
                   "name": _projectNameController.text,
                   "desc": _projectDescController.text,
-                  "image": Random().nextInt(3) + 1,
+                  "image": Random().nextInt(5) + 1,
                 }).then((value) {
                   Get.off(() => MyCustomBottomNavbar(
                         initailIndex: 0,
