@@ -60,7 +60,7 @@ class _AssignProjectState extends State<AssignProject> {
             ),
             Center(
                 child: StyledButton(
-              title: "Creaste project",
+              title: "Create project",
               onTap: () {
                 _projectReference.add({
                   "name": _projectNameController.text,

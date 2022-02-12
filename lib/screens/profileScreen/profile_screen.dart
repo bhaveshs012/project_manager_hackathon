@@ -1,9 +1,12 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:project_manager_hackathon/config/themes.dart';
+import 'package:project_manager_hackathon/controllers/google_signin.dart';
 import 'package:project_manager_hackathon/models/users.dart';
 import 'package:project_manager_hackathon/screens/sharedWidget/bottom_navbar.dart';
+import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 
 class ProfileScreen extends StatelessWidget {
@@ -14,6 +17,7 @@ class ProfileScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
         title: Text(
           " Profile ",
@@ -35,16 +39,20 @@ class ProfileScreen extends StatelessWidget {
             icon: const Icon(
               Icons.exit_to_app,
               size: 30,
+              color: Colors.black,
             ),
-            onPressed: () => null,
-            color: Colors.black,
+            onPressed: () {
+              final provider =
+                  Provider.of<GoogleSignInProvider>(context, listen: false);
+              provider.GoogleLogOut();
+            },
           ),
         ],
       ),
       body: Padding(
         padding: padding,
         child: Column(
-          // crossAxisAlignment: CrossAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Center(
               child: CircleAvatar(
@@ -75,78 +83,66 @@ class ProfileScreen extends StatelessWidget {
                     color: Colors.white, fontWeight: FontWeight.w600),
               ),
             ),
-            SizedBox(height: 2.h),
+            SizedBox(height: 3.5.h),
             Row(
               children: [
                 Text(
-                  " Project Status",
+                  " Task Status",
                   style: title2Style,
                 )
               ],
             ),
             SizedBox(height: 2.h),
             Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                Container(
-                  child: Column(
-                    children: [
-                      Text(
-                        "Completed",
-                        style: subtitlestyle.copyWith(fontSize: 15.sp),
-                      ),
-                      SizedBox(height: 1.h),
-                      Text(
-                        "0",
-                        style: subtitlestyle.copyWith(
-                            fontSize: 17.sp,
-                            color: Themes.primaryColor,
-                            fontWeight: FontWeight.w600),
-                      ),
-                    ],
-                  ),
+                ProjectStatus(
+                  title: "Completed",
+                  value: 0,
                 ),
-                SizedBox(width: 10.w),
-                Container(
-                  child: Column(
-                    children: [
-                      Text(
-                        "On Going",
-                        style: subtitlestyle.copyWith(fontSize: 15.sp),
-                      ),
-                      SizedBox(height: 1.h),
-                      Text(
-                        "0",
-                        style: subtitlestyle.copyWith(
-                            fontSize: 17.sp,
-                            color: Themes.primaryColor,
-                            fontWeight: FontWeight.w600),
-                      ),
-                    ],
-                  ),
+                ProjectStatus(
+                  title: "On Going",
+                  value: 0,
                 ),
-                SizedBox(width: 10.w),
-                Container(
-                  child: Column(
-                    children: [
-                      Text(
-                        "Pending",
-                        style: subtitlestyle.copyWith(fontSize: 15.sp),
-                      ),
-                      SizedBox(height: 1.h),
-                      Text(
-                        "0",
-                        style: subtitlestyle.copyWith(
-                            fontSize: 17.sp,
-                            color: Themes.primaryColor,
-                            fontWeight: FontWeight.w600),
-                      ),
-                    ],
-                  ),
+                ProjectStatus(
+                  title: "In Review",
+                  value: 0,
                 ),
               ],
             )
           ],
         ),
+      ),
+    );
+  }
+}
+
+class ProjectStatus extends StatelessWidget {
+  const ProjectStatus({
+    Key? key,
+    required this.title,
+    required this.value,
+  }) : super(key: key);
+  final String title;
+  final int value;
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: Column(
+        children: [
+          Text(
+            title,
+            style: subtitlestyle.copyWith(fontSize: 15.sp),
+          ),
+          SizedBox(height: 1.h),
+          Text(
+            value.toString(),
+            style: subtitlestyle.copyWith(
+                fontSize: 17.sp,
+                color: Themes.primaryColor,
+                fontWeight: FontWeight.w600),
+          ),
+        ],
       ),
     );
   }
