@@ -4,10 +4,15 @@ class Task {
   final String title;
   final String desc;
   final DateTime deadline;
+  final DateTime startDate;
   final String priority;
-  Task(
-      {required this.title,
-      required this.desc,
-      required this.priority,
-      required this.deadline,});
+  final String id;
+  Task({
+    required this.title,
+    required this.startDate,
+    required this.desc,
+    required this.priority,
+    required this.deadline,
+    required this.id,
+  });
 }

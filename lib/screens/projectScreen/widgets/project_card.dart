@@ -17,6 +17,8 @@ class ProjectCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print(project.taskCompleted);
+    print(project.totalTasks);
     return GestureDetector(
       onTap: () {
         Get.to(() => TaskScreen(user: user, project: project));
@@ -50,11 +52,10 @@ class ProjectCard extends StatelessWidget {
                 height: 3.h,
               ),
               RichText(
-                  text: TextSpan(
-                      text:
-                          "${project.taskCompleted}/${project.totalTasks} tasks",
-                      style: subtitlestyle,
-                      children: [
+                text: TextSpan(
+                  text: "${project.taskCompleted}/${project.totalTasks} tasks",
+                  style: subtitlestyle,
+                  children: [
                     TextSpan(
                       text: project.totalTasks != 0
                           ? "  ${((project.taskCompleted / project.totalTasks) * 100).toInt()}%"
@@ -64,7 +65,9 @@ class ProjectCard extends StatelessWidget {
                           fontWeight: FontWeight.bold,
                           fontSize: 15.sp),
                     )
-                  ]))
+                  ],
+                ),
+              )
             ],
           ),
         ),

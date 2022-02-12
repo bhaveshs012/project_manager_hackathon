@@ -98,7 +98,6 @@ class OnBoardingPage extends StatelessWidget {
           // animationDuration: 1000,
         ),
       );
-
   Widget buildImage(String path) =>
       Center(child: Image.asset(path, width: 350));
 
@@ -120,3 +119,4 @@ class OnBoardingPage extends StatelessWidget {
         pageColor: Colors.white,
       );
 }
+
