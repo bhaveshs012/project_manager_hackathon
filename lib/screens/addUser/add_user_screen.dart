@@ -94,26 +94,36 @@ class _AddUserScreenState extends State<AddUserScreen> {
                   child: StyledButton(
                     title: "Submit",
                     onTap: () {
-                      _userReference.add({
-                        "name": _nameController.text,
-                        "post": _postController.text,
-                        "department": _selectedDepartment,
-                        "is_admin": _isAdmin,
-                        "email": FirebaseAuth.instance.currentUser!.email,
-                      }).then((value) {
-                        user = MyUser(
-                            id: value.id,
-                            name: _nameController.text,
-                            department: _selectedDepartment,
-                            email: FirebaseAuth.instance.currentUser!.email
-                                .toString(),
-                            post: _postController.text,
-                            is_admin: _isAdmin);
-                        Get.to(() => MyCustomBottomNavbar(
-                              initailIndex: 0,
-                              user: user,
-                            ));
-                      });
+                      if (_nameController.text.isEmpty ||
+                          _postController.text.isEmpty) {
+                        Get.snackbar("Error", "Please fill all the fields",
+                            backgroundColor:
+                                Themes.primaryColor.withOpacity(0.5),
+                            colorText: Colors.white,
+                            snackPosition: SnackPosition.BOTTOM,
+                            isDismissible: true);
+                      } else {
+                        _userReference.add({
+                          "name": _nameController.text,
+                          "post": _postController.text,
+                          "department": _selectedDepartment,
+                          "is_admin": _isAdmin,
+                          "email": FirebaseAuth.instance.currentUser!.email,
+                        }).then((value) {
+                          user = MyUser(
+                              id: value.id,
+                              name: _nameController.text,
+                              department: _selectedDepartment,
+                              email: FirebaseAuth.instance.currentUser!.email
+                                  .toString(),
+                              post: _postController.text,
+                              is_admin: _isAdmin);
+                          Get.to(() => MyCustomBottomNavbar(
+                                initailIndex: 0,
+                                user: user,
+                              ));
+                        });
+                      }
                     },
                   ),
                 ),

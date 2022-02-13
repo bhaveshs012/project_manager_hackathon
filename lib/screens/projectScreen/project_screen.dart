@@ -43,123 +43,117 @@ class ProjectScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Padding(
-          padding: padding,
-          child: SafeArea(
-            child: Column(
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Flexible(
-                      child: Text('Hello, ${user.name.capitalize}',
-                          style: title2Style, overflow: TextOverflow.ellipsis),
+        padding: padding,
+        child: SafeArea(
+          child: Column(
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Flexible(
+                    child: Text('Hello, ${user.name.capitalize}',
+                        style: title2Style, overflow: TextOverflow.ellipsis),
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      Get.to(MyCustomBottomNavbar(initailIndex: 3, user: user));
+                    },
+                    child: CircleAvatar(
+                      radius: 30,
+                      backgroundImage:
+                          NetworkImage(fbUser!.photoURL.toString()),
                     ),
-                    GestureDetector(
-                      onTap: () {
-                        Get.to(
-                            MyCustomBottomNavbar(initailIndex: 3, user: user));
-                      },
-                      child: CircleAvatar(
-                        radius: 30,
-                        backgroundImage:
-                            NetworkImage(fbUser!.photoURL.toString()),
-                      ),
-                    ),
-                  ],
-                ),
-                SizedBox(
-                  height: 2.h,
-                ),
-                Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text('Projects', style: title2Style),
-                      Visibility(
-                        visible: user.is_admin == true ? true : false,
-                        child: CircleAvatar(
-                          backgroundColor: Themes.primaryColor,
-                          radius: 20,
-                          child: Center(
-                            child: IconButton(
-                              icon: Icon(
-                                Icons.add,
-                                color: Colors.white,
-                                size: 20,
-                              ),
-                              onPressed: () {
-                                Get.to(AssignProject(user: user));
-                              },
-                            ),
-                          ),
+                  ),
+                ],
+              ),
+              SizedBox(
+                height: 2.h,
+              ),
+              Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+                Text('Projects', style: title2Style),
+                Visibility(
+                  visible: user.is_admin == true ? true : false,
+                  child: CircleAvatar(
+                    backgroundColor: Themes.primaryColor,
+                    radius: 20,
+                    child: Center(
+                      child: IconButton(
+                        icon: Icon(
+                          Icons.add,
+                          color: Colors.white,
+                          size: 20,
                         ),
+                        onPressed: () {
+                          Get.to(AssignProject(user: user));
+                        },
                       ),
-                    ]),
-                SizedBox(
-                  height: 2.h,
+                    ),
+                  ),
                 ),
-                Expanded(
-                  child: StreamBuilder<QuerySnapshot>(
-                      stream: _projectStream,
-                      builder: (context, snapshot) {
-                        if (snapshot.connectionState ==
-                            ConnectionState.waiting) {
-                          return Center(
-                              child: CircularProgressIndicator(
-                                  color: Themes.primaryColor));
-                        } else if (snapshot.hasData) {
-                          final List projectList = [];
-                          snapshot.data!.docs.map((DocumentSnapshot document) {
-                            Map a = document.data() as Map<String, dynamic>;
-                            projectList.add(a);
-                            a['id'] = document.id;
-                          }).toList();
-                          return ListView.builder(
-                              itemBuilder: (context, index) {
-                                return FutureBuilder(
-                                    future: Future.wait([
-                                      _getTotalTasks(projectList[index]['id']),
-                                      _getTasksDone(projectList[index]['id']),
-                                    ]),
-                                    builder: (context,
-                                        AsyncSnapshot<List<dynamic>> snapshot) {
-                                      if (snapshot.connectionState ==
-                                          ConnectionState.waiting) {
-                                        return Center(
-                                            child: CircularProgressIndicator(
-                                                color: Themes.primaryColor));
-                                      } else if (snapshot.hasData) {
-                                        return Container(
-                                          margin: EdgeInsets.symmetric(
-                                              vertical: 10),
-                                          child: ProjectCard(
-                                            user: user,
-                                            project: Project(
-                                                name: projectList[index]
-                                                    ["name"],
-                                                id: projectList[index]["id"],
-                                                image: projectList[index]
-                                                    ["image"],
-                                                desc: projectList[index]
-                                                    ["desc"],
-                                                totalTasks: snapshot.data![0],
-                                                taskCompleted:
-                                                    snapshot.data![1]),
-                                          ),
-                                        );
-                                      }
-                                      return EmptyWidget(
-                                          message:
-                                              "Please add a new Project to Continue");
-                                    });
-                              },
-                              itemCount: projectList.length);
-                        }
-                        return Container();
-                      }),
-                ),
-              ],
-            ),
-          )),
+              ]),
+              SizedBox(
+                height: 2.h,
+              ),
+              Expanded(
+                child: StreamBuilder<QuerySnapshot>(
+                    stream: _projectStream,
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return Center(
+                            child: CircularProgressIndicator(
+                                color: Themes.primaryColor));
+                      } else if (snapshot.hasData) {
+                        final List projectList = [];
+                        snapshot.data!.docs.map((DocumentSnapshot document) {
+                          Map a = document.data() as Map<String, dynamic>;
+                          projectList.add(a);
+                          a['id'] = document.id;
+                        }).toList();
+                        return ListView.builder(
+                            itemBuilder: (context, index) {
+                              return FutureBuilder(
+                                  future: Future.wait([
+                                    _getTotalTasks(projectList[index]['id']),
+                                    _getTasksDone(projectList[index]['id']),
+                                  ]),
+                                  builder: (context,
+                                      AsyncSnapshot<List<dynamic>> snapshot) {
+                                    if (snapshot.connectionState ==
+                                        ConnectionState.waiting) {
+                                      return Center(
+                                          child: CircularProgressIndicator(
+                                              color: Themes.primaryColor));
+                                    } else if (snapshot.hasData) {
+                                      return Container(
+                                        margin:
+                                            EdgeInsets.symmetric(vertical: 10),
+                                        child: ProjectCard(
+                                          user: user,
+                                          project: Project(
+                                              name: projectList[index]["name"],
+                                              id: projectList[index]["id"],
+                                              image: projectList[index]
+                                                  ["image"],
+                                              desc: projectList[index]["desc"],
+                                              totalTasks: snapshot.data![0],
+                                              taskCompleted: snapshot.data![1]),
+                                        ),
+                                      );
+                                    }
+                                    return EmptyWidget(
+                                        message:
+                                            "Please add a new Project to Continue");
+                                  });
+                            },
+                            itemCount: projectList.length);
+                      }
+                      return Container();
+                    }),
+              ),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }
