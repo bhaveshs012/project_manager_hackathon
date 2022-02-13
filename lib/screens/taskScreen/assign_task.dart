@@ -160,17 +160,16 @@ class _AssignTaskState extends State<AssignTask> {
                 child: StyledButton(
                   title: "Assign Task",
                   onTap: () {
-                 _userTaskReference.add({
-                      "name": _taskNameController.text,
-                      "desc": _taskDescriptionController.text,
-                      "deadline": _selectedDate,
-                      "priority": _selectedPriority,
-                      "start_date": DateTime.now(),
-                      "user_id": _selectedId,
-                      "status": "ongoing",
-                    }).then((id) {
-                      _taskReference.add({
-                        "user_task_id": id.id,
+                    if (_taskNameController.text.isEmpty ||
+                        _taskDescriptionController.text.isEmpty ||
+                        _selectedPriority.isEmpty) {
+                      Get.snackbar("Error", "Please fill all the fields",
+                          backgroundColor: Themes.primaryColor.withOpacity(0.5),
+                          colorText: Colors.white,
+                          snackPosition: SnackPosition.BOTTOM,
+                          isDismissible: true);
+                    } else {
+                      _userTaskReference.add({
                         "name": _taskNameController.text,
                         "desc": _taskDescriptionController.text,
                         "deadline": _selectedDate,
@@ -178,17 +177,28 @@ class _AssignTaskState extends State<AssignTask> {
                         "start_date": DateTime.now(),
                         "user_id": _selectedId,
                         "status": "ongoing",
-                      }).then(
-                        (value) {
-                          Get.offAll(
-                            TaskScreen(
-                              user: widget.user,
-                              project: widget.project,
-                            ),
-                          );
-                        },
-                      );
-                    });
+                      }).then((id) {
+                        _taskReference.add({
+                          "user_task_id": id.id,
+                          "name": _taskNameController.text,
+                          "desc": _taskDescriptionController.text,
+                          "deadline": _selectedDate,
+                          "priority": _selectedPriority,
+                          "start_date": DateTime.now(),
+                          "user_id": _selectedId,
+                          "status": "ongoing",
+                        }).then(
+                          (value) {
+                            Get.offAll(
+                              TaskScreen(
+                                user: widget.user,
+                                project: widget.project,
+                              ),
+                            );
+                          },
+                        );
+                      });
+                    }
                   },
                 ),
               ),

@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:project_manager_hackathon/config/themes.dart';
 import 'package:project_manager_hackathon/models/users.dart';
+import 'package:project_manager_hackathon/screens/sharedWidget/empty_widget.dart';
 import 'package:project_manager_hackathon/screens/userAnalytics/widgets/user_card.dart';
 import 'package:stream_chat_flutter/stream_chat_flutter.dart';
 
@@ -100,7 +101,7 @@ class UserAnalytics extends StatelessWidget {
                                           is_admin: userList[index]
                                               ["is_admin"]));
                                 }
-                                return Container();
+                                return EmptyWidget(message: "No Users Added!");
                               },
                             );
                           },

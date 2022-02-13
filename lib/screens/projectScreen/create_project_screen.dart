@@ -62,16 +62,25 @@ class _AssignProjectState extends State<AssignProject> {
                 child: StyledButton(
               title: "Create project",
               onTap: () {
-                _projectReference.add({
-                  "name": _projectNameController.text,
-                  "desc": _projectDescController.text,
-                  "image": Random().nextInt(5) + 1,
-                }).then((value) {
-                  Get.off(() => MyCustomBottomNavbar(
-                        initailIndex: 0,
-                        user: widget.user,
-                      ));
-                });
+                if (_projectNameController.text.isEmpty ||
+                    _projectDescController.text == null) {
+                  Get.snackbar("Error", "Please fill all the fields",
+                      backgroundColor: Themes.primaryColor,
+                      colorText: Colors.white,
+                      snackPosition: SnackPosition.BOTTOM,
+                      isDismissible: true);
+                } else {
+                  _projectReference.add({
+                    "name": _projectNameController.text,
+                    "desc": _projectDescController.text,
+                    "image": Random().nextInt(5) + 1,
+                  }).then((value) {
+                    Get.off(() => MyCustomBottomNavbar(
+                          initailIndex: 0,
+                          user: widget.user,
+                        ));
+                  });
+                }
               },
             ))
           ]),
