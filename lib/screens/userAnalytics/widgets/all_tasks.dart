@@ -44,6 +44,7 @@ class AllTasks extends StatelessWidget {
                           return AllTaskCard(
                             project: project,
                             tasks: Task(
+                              status: tasksList[index]['status'],
                                user_id: tasksList[index]['user_id'],
                               user_task_id: tasksList[index]['user_task_id'],
                               id: tasksList[index]['id'],
