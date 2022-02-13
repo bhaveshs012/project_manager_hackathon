@@ -9,7 +9,8 @@ class Task {
   final String id;
   final String user_id;
   final String user_task_id;
-  Task( {
+  final String status;
+  Task({
     required this.title,
     required this.startDate,
     required this.desc,
@@ -17,6 +18,7 @@ class Task {
     required this.deadline,
     required this.id,
     required this.user_id,
-     required this.user_task_id,
+    required this.user_task_id,
+    required this.status,
   });
 }
