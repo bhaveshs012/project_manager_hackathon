@@ -26,11 +26,12 @@ class TaskCard extends StatelessWidget {
           TaskDetailsScreen(
             tasks: tasks,
             project: project,
+            user: user,
           ),
         );
       },
       child: Container(
-        margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+        margin: EdgeInsets.symmetric(horizontal: 2.5.w, vertical: 2.h),
         width: double.infinity,
         height: 80,
         decoration: BoxDecoration(
@@ -77,34 +78,48 @@ class TaskCard extends StatelessWidget {
                               fontWeight: FontWeight.bold,
                               fontSize: 14),
                         ),
-                        Row(
+                        Column(
                           children: [
-                            const Icon(
-                              Icons.access_time,
-                              color: Colors.black38,
-                              size: 15,
+                            Row(
+                              children: [
+                                const Icon(
+                                  Icons.access_time,
+                                  color: Colors.black38,
+                                  size: 15,
+                                ),
+                                const SizedBox(
+                                  width: 5,
+                                ),
+                                Text(
+                                  "${DateFormat('dd-MM-yyyy').format(tasks.deadline)}",
+                                  style: const TextStyle(
+                                    color: Colors.black87,
+                                  ),
+                                )
+                              ],
                             ),
-                            const SizedBox(
-                              width: 5,
-                            ),
-                            Text(
-                              "${DateFormat('dd-MM-yyyy').format(tasks.deadline)}",
-                              style: const TextStyle(
-                                color: Colors.black87,
-                              ),
-                            )
                           ],
                         )
                       ],
                     ),
                   ),
-                  Container(
-                    margin: const EdgeInsets.only(right: 5),
-                    child: Text(
-                      tasks.desc,
-                      overflow: TextOverflow.ellipsis,
-                      style: subtitlestyle,
-                    ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Container(
+                        margin: const EdgeInsets.only(right: 5),
+                        child: Text(
+                          tasks.desc,
+                          overflow: TextOverflow.ellipsis,
+                          style: subtitlestyle,
+                        ),
+                      ),
+                      Text(
+                        tasks.status.toString().capitalize.toString(),
+                        style:
+                            subtitlestyle.copyWith(fontWeight: FontWeight.bold),
+                      )
+                    ],
                   )
                 ],
               ),
