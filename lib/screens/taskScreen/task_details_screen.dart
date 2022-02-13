@@ -1,25 +1,34 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:project_manager_hackathon/config/themes.dart';
 import 'package:project_manager_hackathon/models/projects.dart';
 import 'package:project_manager_hackathon/models/tasks.dart';
+import 'package:project_manager_hackathon/models/users.dart';
 import 'package:project_manager_hackathon/screens/sharedWidget/style_button.dart';
+import 'package:project_manager_hackathon/screens/taskScreen/task_screen.dart';
 import 'package:sizer/sizer.dart';
 
 class TaskDetailsScreen extends StatelessWidget {
   const TaskDetailsScreen(
-      {Key? key, required this.tasks, required this.project})
+      {Key? key,
+      required this.tasks,
+      required this.project,
+      required this.user})
       : super(key: key);
   final Task tasks;
   final Project project;
+  final MyUser user;
+
   @override
   Widget build(BuildContext context) {
-    DocumentReference taskRef = FirebaseFirestore.instance
+    DocumentReference _taskRef = FirebaseFirestore.instance
         .collection("projects")
         .doc(project.id)
         .collection("tasks")
         .doc(tasks.id);
+           DocumentReference _userTaskRef = FirebaseFirestore.instance.collection('users').doc(tasks.user_id).collection('tasks').doc(tasks.user_task_id); 
     return Scaffold(
       body: SafeArea(
         child: Padding(
@@ -130,16 +139,31 @@ class TaskDetailsScreen extends StatelessWidget {
                 ),
                 SizedBox(height: 5.h),
                 Center(
-                  child: StyledButton(
-                    title: "Mark For Review",
-                    onTap: () {
-                      taskRef.update(
-                        {
-                          'status': 'in_review',
-                        },
-                      );
-                    },
-                  ),
+                  child:
+
+                   tasks.status == 'ongoing'
+                       ?  user.is_admin == false ?  StyledButton(
+                          title: "Mark For Review",
+                          onTap: () {
+                            _taskRef.update(
+                              {
+                                'status': 'in_review',
+                              },
+                            );
+                            Get.off(TaskScreen(user: user, project: project));
+                          },
+                        ) 
+                      : Text(
+                          "Already sent for review",
+                          style: subtitle1Style,
+                        ) : StyledButton(
+                          title: "Mark For Complete",
+                          onTap: () {
+                              _taskRef.update({'status': "completed"});
+                  _userTaskRef.update({'status': "completed"});
+                            Get.off(TaskScreen(user: user, project: project));
+                          },
+                        )
                 )
               ],
             ),

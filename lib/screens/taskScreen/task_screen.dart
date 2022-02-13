@@ -25,7 +25,12 @@ class _TaskScreenState extends State<TaskScreen> {
   DateTime _selectedDate = DateTime.now();
   @override
   Widget build(BuildContext context) {
-    final Stream<QuerySnapshot> _taskStream = FirebaseFirestore.instance
+    final Stream<QuerySnapshot> _taskStream = widget.user.is_admin == true ? FirebaseFirestore.instance
+        .collection('projects')
+        .doc(widget.project.id)
+        .collection('tasks')
+        .snapshots()
+        : FirebaseFirestore.instance
         .collection('projects')
         .doc(widget.project.id)
         .collection('tasks')
@@ -117,8 +122,11 @@ class _TaskScreenState extends State<TaskScreen> {
                               snapshot.data!.docs
                                   .map((DocumentSnapshot document) {
                                 Map a = document.data() as Map<String, dynamic>;
+                                if(a["status"] != 'completed'){
                                 tasksList.add(a);
                                 a['id'] = document.id;
+                                }
+                              
                               }).toList();
                               return ListView.builder(
                                 itemCount: tasksList.length,
@@ -163,7 +171,6 @@ class _TaskScreenState extends State<TaskScreen> {
         backgroundColor: Themes.primaryColor,
         child: const Icon(Icons.add),
         onPressed: () {
-          print("${widget.user.is_admin} nameee");
           Get.to(() => AssignTask(
                 user: widget.user,
                 project: widget.project,
