@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:project_manager_hackathon/config/themes.dart';
 import 'package:project_manager_hackathon/models/projects.dart';
 import 'package:project_manager_hackathon/models/tasks.dart';
+import 'package:project_manager_hackathon/screens/sharedWidget/empty_widget.dart';
 import 'package:project_manager_hackathon/screens/userAnalytics/widgets/all_task_card.dart';
 
 class AllTasks extends StatelessWidget {
@@ -30,6 +31,10 @@ class AllTasks extends StatelessWidget {
                     return Center(
                         child: CircularProgressIndicator(
                             color: Themes.primaryColor));
+                  } else if (snapshot.data!.docs.length < 1) {
+                    return EmptyWidget(
+                      message: "You have no Tasks for Today!",
+                    );
                   } else if (snapshot.hasData) {
                     print(snapshot.data!.docs.length);
                     final List tasksList = [];
@@ -44,7 +49,7 @@ class AllTasks extends StatelessWidget {
                           return AllTaskCard(
                             project: project,
                             tasks: Task(
-                               user_id: tasksList[index]['user_id'],
+                              user_id: tasksList[index]['user_id'],
                               user_task_id: tasksList[index]['user_task_id'],
                               id: tasksList[index]['id'],
                               title: tasksList[index]["name"],

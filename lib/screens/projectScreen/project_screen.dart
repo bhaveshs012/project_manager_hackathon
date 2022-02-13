@@ -7,6 +7,8 @@ import 'package:project_manager_hackathon/models/projects.dart';
 import 'package:project_manager_hackathon/models/users.dart';
 import 'package:project_manager_hackathon/screens/projectScreen/create_project_screen.dart';
 import 'package:project_manager_hackathon/screens/projectScreen/widgets/project_card.dart';
+import 'package:project_manager_hackathon/screens/sharedWidget/bottom_navbar.dart';
+import 'package:project_manager_hackathon/screens/sharedWidget/empty_widget.dart';
 import 'package:sizer/sizer.dart';
 
 class ProjectScreen extends StatelessWidget {
@@ -52,10 +54,16 @@ class ProjectScreen extends StatelessWidget {
                       child: Text('Hello, ${user.name.capitalize}',
                           style: title2Style, overflow: TextOverflow.ellipsis),
                     ),
-                    CircleAvatar(
-                      radius: 30,
-                      backgroundImage:
-                          NetworkImage(fbUser!.photoURL.toString()),
+                    GestureDetector(
+                      onTap: () {
+                        Get.to(
+                            MyCustomBottomNavbar(initailIndex: 3, user: user));
+                      },
+                      child: CircleAvatar(
+                        radius: 30,
+                        backgroundImage:
+                            NetworkImage(fbUser!.photoURL.toString()),
+                      ),
                     ),
                   ],
                 ),
@@ -139,7 +147,9 @@ class ProjectScreen extends StatelessWidget {
                                           ),
                                         );
                                       }
-                                      return Container();
+                                      return EmptyWidget(
+                                          message:
+                                              "Please add a new Project to Continue");
                                     });
                               },
                               itemCount: projectList.length);

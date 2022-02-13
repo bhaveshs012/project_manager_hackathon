@@ -7,6 +7,7 @@ import 'package:project_manager_hackathon/models/projects.dart';
 import 'package:project_manager_hackathon/models/tasks.dart';
 import 'package:project_manager_hackathon/models/users.dart';
 import 'package:project_manager_hackathon/screens/sharedWidget/bottom_navbar.dart';
+import 'package:project_manager_hackathon/screens/sharedWidget/empty_widget.dart';
 import 'package:project_manager_hackathon/screens/taskScreen/assign_task.dart';
 import 'package:project_manager_hackathon/screens/taskScreen/widgets/priority_indicator.dart';
 import 'package:project_manager_hackathon/screens/taskScreen/widgets/task_card.dart';
@@ -21,7 +22,6 @@ class TaskScreen extends StatefulWidget {
 }
 
 class _TaskScreenState extends State<TaskScreen> {
-
   DateTime _selectedDate = DateTime.now();
   @override
   Widget build(BuildContext context) {
@@ -107,6 +107,10 @@ class _TaskScreenState extends State<TaskScreen> {
                               return Center(
                                   child: CircularProgressIndicator(
                                       color: Themes.primaryColor));
+                            } else if (snapshot.data!.docs.length < 1) {
+                              return EmptyWidget(
+                                message: "You have no Tasks for Today!",
+                              );
                             } else if (snapshot.hasData) {
                               print(snapshot.data!.docs.length);
                               final List tasksList = [];
@@ -117,34 +121,35 @@ class _TaskScreenState extends State<TaskScreen> {
                                 a['id'] = document.id;
                               }).toList();
                               return ListView.builder(
-                                  itemCount: tasksList.length,
-                                  itemBuilder: ((context, index) {
-                                    return TaskCard(
-                                        project: widget.project,
-                                        tasks: Task(
-                                          user_id: tasksList[index]['user_id'],
-                                          user_task_id: tasksList[index]['user_task_id'],
-                                          id: tasksList[index]['id'],
-                                          title: tasksList[index]["name"],
-                                          desc: tasksList[index]["desc"],
-                                          priority: tasksList[index]
-                                              ["priority"],
-                                          deadline: DateTime.parse(
-                                              tasksList[index]["deadline"]
-                                                  .toDate()
-                                                  .toString()),
-                                          startDate: DateTime.parse(
-                                              tasksList[index]["start_date"]
-                                                  .toDate()
-                                                  .toString()),
-                                        ),
-                                        user: widget.user);
-                                  }));
-                            } else {
-                              return const Center(
-                                child: Text("No Tasks"),
+                                itemCount: tasksList.length,
+                                itemBuilder: ((context, index) {
+                                  return TaskCard(
+                                      project: widget.project,
+                                      tasks: Task(
+                                        user_id: tasksList[index]['user_id'],
+                                        user_task_id: tasksList[index]
+                                            ['user_task_id'],
+                                        id: tasksList[index]['id'],
+                                        title: tasksList[index]["name"],
+                                        desc: tasksList[index]["desc"],
+                                        priority: tasksList[index]["priority"],
+                                        deadline: DateTime.parse(
+                                            tasksList[index]["deadline"]
+                                                .toDate()
+                                                .toString()),
+                                        startDate: DateTime.parse(
+                                            tasksList[index]["start_date"]
+                                                .toDate()
+                                                .toString()),
+                                      ),
+                                      user: widget.user);
+                                }),
                               );
                             }
+                            return const Center(
+                              child: Text("No Tasks",
+                                  style: TextStyle(fontSize: 20)),
+                            );
                           }),
                     ),
                   ],
