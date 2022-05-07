@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:project_manager_hackathon/config/themes.dart';
 import 'package:project_manager_hackathon/models/projects.dart';
-import 'package:project_manager_hackathon/models/users.dart';
-import 'package:project_manager_hackathon/screens/taskScreen/task_screen.dart';
 import 'package:project_manager_hackathon/screens/userAnalytics/widgets/all_tasks.dart';
 import 'package:sizer/sizer.dart';
 

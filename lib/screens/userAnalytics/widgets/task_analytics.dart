@@ -7,6 +7,7 @@ import 'package:project_manager_hackathon/models/projects.dart';
 import 'package:project_manager_hackathon/models/users.dart';
 import 'package:project_manager_hackathon/screens/projectScreen/create_project_screen.dart';
 import 'package:project_manager_hackathon/screens/projectScreen/widgets/project_card.dart';
+import 'package:project_manager_hackathon/screens/sharedWidget/top_row.dart';
 import 'package:project_manager_hackathon/screens/userAnalytics/widgets/all_project_card.dart';
 import 'package:sizer/sizer.dart';
 
@@ -43,13 +44,10 @@ class TaskAnalysis extends StatelessWidget {
           child: SafeArea(
             child: Column(
               children: [
+                SizedBox(
+                  height: 2.h,
+                ),
                 
-                SizedBox(
-                  height: 2.h,
-                ),
-                SizedBox(
-                  height: 2.h,
-                ),
                 Expanded(
                   child: StreamBuilder<QuerySnapshot>(
                       stream: _projectStream,

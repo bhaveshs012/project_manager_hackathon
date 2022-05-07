@@ -23,7 +23,6 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   @override
-  @override
   Widget build(BuildContext context) {
     //created to initialize provider package
     return ChangeNotifierProvider(
@@ -58,4 +57,3 @@ setFlag() async {
   SharedPreferences _prefs = await SharedPreferences.getInstance();
   _prefs.setBool('visited', true);
 }
-

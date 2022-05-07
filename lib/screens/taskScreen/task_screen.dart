@@ -25,18 +25,20 @@ class _TaskScreenState extends State<TaskScreen> {
   DateTime _selectedDate = DateTime.now();
   @override
   Widget build(BuildContext context) {
-    final Stream<QuerySnapshot> _taskStream = widget.user.is_admin == true ? FirebaseFirestore.instance
-        .collection('projects')
-        .doc(widget.project.id)
-        .collection('tasks')
-        .snapshots()
+    final Stream<QuerySnapshot> _taskStream = widget.user.is_admin == true
+        ? FirebaseFirestore.instance
+            .collection('projects')
+            .doc(widget.project.id)
+            .collection('tasks')
+            .where('deadline', isGreaterThanOrEqualTo: _selectedDate)
+            .snapshots()
         : FirebaseFirestore.instance
-        .collection('projects')
-        .doc(widget.project.id)
-        .collection('tasks')
-        .where('deadline', isGreaterThanOrEqualTo: _selectedDate)
-        .where('user_id', isEqualTo: widget.user.id)
-        .snapshots();
+            .collection('projects')
+            .doc(widget.project.id)
+            .collection('tasks')
+            .where('deadline', isGreaterThanOrEqualTo: _selectedDate)
+            .where('user_id', isEqualTo: widget.user.id)
+            .snapshots();
     print(_selectedDate);
     return Scaffold(
       appBar: AppBar(
@@ -122,11 +124,10 @@ class _TaskScreenState extends State<TaskScreen> {
                               snapshot.data!.docs
                                   .map((DocumentSnapshot document) {
                                 Map a = document.data() as Map<String, dynamic>;
-                                if(a["status"] != 'completed'){
-                                tasksList.add(a);
-                                a['id'] = document.id;
+                                if (a["status"] != 'completed') {
+                                  tasksList.add(a);
+                                  a['id'] = document.id;
                                 }
-                              
                               }).toList();
                               return ListView.builder(
                                   itemCount: tasksList.length,
@@ -136,7 +137,8 @@ class _TaskScreenState extends State<TaskScreen> {
                                         tasks: Task(
                                           status: tasksList[index]['status'],
                                           user_id: tasksList[index]['user_id'],
-                                          user_task_id: tasksList[index]['user_task_id'],
+                                          user_task_id: tasksList[index]
+                                              ['user_task_id'],
                                           id: tasksList[index]['id'],
                                           title: tasksList[index]["name"],
                                           desc: tasksList[index]["desc"],
@@ -158,10 +160,6 @@ class _TaskScreenState extends State<TaskScreen> {
                                 child: Text("No Tasks"),
                               );
                             }
-                            return const Center(
-                              child: Text("No Tasks",
-                                  style: TextStyle(fontSize: 20)),
-                            );
                           }),
                     ),
                   ],

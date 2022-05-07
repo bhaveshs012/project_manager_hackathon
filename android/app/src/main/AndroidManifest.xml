@@ -1,9 +1,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    package="com.example.project_manager_hackathon">
+    package="com.example.project_manager_hackathon"
+    xmlns:tools="http://schemas.android.com/tools">
+    <uses-permission android:name="android.permission.INTERNET" />
    <application
         tools:replace="android:label"  
-        android:label="project_manager_hackathon"
+        android:label="Proyecto"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

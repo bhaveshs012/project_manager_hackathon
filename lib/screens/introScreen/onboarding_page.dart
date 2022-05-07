@@ -22,7 +22,7 @@ class OnBoardingPage extends StatelessWidget {
                 style: subtitlestyle.copyWith(fontSize: 16.sp),
                 textAlign: TextAlign.center,
               ),
-              image: buildImage('assets/images/on_board/1.png'),
+              image: buildImage('assets/images/on_board/onboard_1.png'),
               decoration: getPageDecoration(),
             ),
             PageViewModel(
@@ -36,7 +36,7 @@ class OnBoardingPage extends StatelessWidget {
                 style: subtitlestyle.copyWith(fontSize: 16.sp),
                 textAlign: TextAlign.center,
               ),
-              image: buildImage('assets/images/on_board/2.png'),
+              image: buildImage('assets/images/on_board/onboard_2.png'),
               decoration: getPageDecoration(),
             ),
             PageViewModel(
@@ -50,7 +50,7 @@ class OnBoardingPage extends StatelessWidget {
                 style: subtitlestyle.copyWith(fontSize: 16.sp),
                 textAlign: TextAlign.center,
               ),
-              image: buildImage('assets/images/on_board/3.png'),
+              image: buildImage('assets/images/on_board/onboard_3.png'),
               decoration: getPageDecoration(),
             ),
             PageViewModel(
@@ -70,25 +70,25 @@ class OnBoardingPage extends StatelessWidget {
                   Get.to(LoginScreen());
                 },
               ),
-              image: buildImage('assets/images/on_board/4.png'),
+              image: buildImage('assets/images/on_board/onboard_4.png'),
               decoration: getPageDecoration(),
             ),
           ],
           done:
-              Text('Done', style: subtitlestyle.copyWith(color: Colors.white)),
+              Text('Done', style: subtitlestyle.copyWith(color: Colors.black)),
           onDone: () => Get.to(LoginScreen()),
           showSkipButton: true,
           skip: Center(
               child: Text('Skip',
-                  style: subtitlestyle.copyWith(color: Colors.white))),
+                  style: subtitlestyle.copyWith(color: Colors.black))),
           onSkip: () => Get.to(LoginScreen()),
           next: Icon(
             Icons.arrow_forward,
-            color: Colors.white,
+            color: Colors.black,
           ),
           dotsDecorator: getDotDecoration(),
           onChange: (index) => print('Page $index selected'),
-          globalBackgroundColor: Themes.primaryColor,
+          globalBackgroundColor: Colors.white,
           skipFlex: 0,
           nextFlex: 0,
           // isProgressTap: false,
@@ -102,6 +102,7 @@ class OnBoardingPage extends StatelessWidget {
       Center(child: Image.asset(path, width: 350));
 
   DotsDecorator getDotDecoration() => DotsDecorator(
+        activeColor: Themes.primaryColor,
         color: Color(0xFFBDBDBD),
         //activeColor: Colors.orange,
         size: Size(10, 10),

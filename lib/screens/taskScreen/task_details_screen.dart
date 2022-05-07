@@ -28,7 +28,11 @@ class TaskDetailsScreen extends StatelessWidget {
         .doc(project.id)
         .collection("tasks")
         .doc(tasks.id);
-           DocumentReference _userTaskRef = FirebaseFirestore.instance.collection('users').doc(tasks.user_id).collection('tasks').doc(tasks.user_task_id); 
+    DocumentReference _userTaskRef = FirebaseFirestore.instance
+        .collection('users')
+        .doc(tasks.user_id)
+        .collection('tasks')
+        .doc(tasks.user_task_id);
     return Scaffold(
       body: SafeArea(
         child: Padding(
@@ -37,8 +41,14 @@ class TaskDetailsScreen extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Center(
-                  child: Text(tasks.title.toUpperCase(), style: title1Style),
+                Row(
+                  children: [
+                    BackButton(),
+                    Center(
+                      child:
+                          Text(tasks.title.toUpperCase(), style: title1Style),
+                    ),
+                  ],
                 ),
                 SizedBox(height: 3.h),
                 Container(
@@ -139,31 +149,41 @@ class TaskDetailsScreen extends StatelessWidget {
                 ),
                 SizedBox(height: 5.h),
                 Center(
-                  child:
-
-                   tasks.status == 'ongoing'
-                       ?  user.is_admin == false ?  StyledButton(
-                          title: "Mark For Review",
-                          onTap: () {
-                            _taskRef.update(
-                              {
-                                'status': 'in_review',
+                  child: tasks.status == 'ongoing'
+                      ? user.is_admin == false
+                          ? StyledButton(
+                              title: "Mark For Review",
+                              onTap: () {
+                                _taskRef.update(
+                                  {
+                                    'status': 'in_review',
+                                  },
+                                );
+                                _userTaskRef.update(
+                                  {'status': "in_review"},
+                                );
+                                Get.off(
+                                    TaskScreen(user: user, project: project));
                               },
-                            );
-                            Get.off(TaskScreen(user: user, project: project));
-                          },
-                        ) 
-                      : Text(
-                          "Already sent for review",
-                          style: subtitle1Style,
-                        ) : StyledButton(
-                          title: "Mark For Complete",
-                          onTap: () {
-                              _taskRef.update({'status': "completed"});
-                  _userTaskRef.update({'status': "completed"});
-                            Get.off(TaskScreen(user: user, project: project));
-                          },
-                        )
+                            )
+                          : Text(
+                              "Task is Still Pending",
+                              style: subtitle1Style,
+                            )
+                      : user.is_admin == true
+                          ? StyledButton(
+                              title: "Mark as Complete",
+                              onTap: () {
+                                _taskRef.update({'status': "completed"});
+                                _userTaskRef.update({'status': "completed"});
+                                Get.off(
+                                    TaskScreen(user: user, project: project));
+                              },
+                            )
+                          : Text(
+                              "Sent for reviewing",
+                              style: subtitle1Style,
+                            ),
                 )
               ],
             ),

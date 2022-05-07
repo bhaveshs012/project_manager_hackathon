@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:get/get.dart';
 import 'package:jitsi_meet/jitsi_meet.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -46,6 +47,7 @@ class _JoinMeetState extends State<JoinMeet> {
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       home: Scaffold(
         body: Container(
           padding: const EdgeInsets.symmetric(
@@ -108,7 +110,17 @@ class _JoinMeetState extends State<JoinMeet> {
               ),
               ElevatedButton(
                 onPressed: () {
-                  _joinMeeting();
+                  if (roomText.text.isEmpty || nameText.text.isEmpty) {
+                    Get.snackbar(
+                      "Error",
+                      "Please fill all the fields",
+                      snackPosition: SnackPosition.BOTTOM,
+                      margin:
+                          EdgeInsets.symmetric(vertical: 20, horizontal: 10),
+                    );
+                  } else {
+                    _joinMeeting();
+                  }
                 },
                 child: Text("Join Meeting",
                     style: subtitlestyle.copyWith(color: Colors.white)),

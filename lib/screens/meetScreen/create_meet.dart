@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:jitsi_meet/jitsi_meet.dart';
 import 'package:project_manager_hackathon/config/themes.dart';
 import 'package:project_manager_hackathon/screens/sharedWidget/input_field.dart';
@@ -16,7 +17,7 @@ class CreateMeet extends StatefulWidget {
 
 class _CreateMeetState extends State<CreateMeet> {
   final serverText = TextEditingController();
-  String roomText = "";
+  final roomText = TextEditingController();
   final subjectText = TextEditingController();
   final nameText = TextEditingController();
   final emailText = TextEditingController();
@@ -46,6 +47,7 @@ class _CreateMeetState extends State<CreateMeet> {
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       home: Scaffold(
         body: SafeArea(
           child: Padding(
@@ -96,19 +98,20 @@ class _CreateMeetState extends State<CreateMeet> {
   }
 
   Widget meetConfig() {
-    String meetCode() {
-      String part1 = randomAlpha(3);
-      String part2 = randomAlpha(3);
-      String part3 = randomAlpha(3);
-      return part1 + "-" + part2 + "-" + part3.toLowerCase();
-    }
-
     return SingleChildScrollView(
       child: SafeArea(
         child: Padding(
           padding: padding,
           child: Column(
             children: <Widget>[
+              MyInputField(
+                title: "Room Name",
+                hint: "Enter Room Name",
+                controller: roomText,
+              ),
+              const SizedBox(
+                height: 25.0,
+              ),
               MyInputField(
                   title: "Subject Text",
                   hint: "Enter the subject of dicussion",
@@ -126,11 +129,17 @@ class _CreateMeetState extends State<CreateMeet> {
               ),
               ElevatedButton(
                 onPressed: () {
-                  setState(() {
-                    roomText = meetCode();
-                  });
-
-                  _joinMeeting();
+                  if (roomText.text.isEmpty || subjectText.text.isEmpty) {
+                    Get.snackbar(
+                      "Error",
+                      "Please fill all the fields",
+                      snackPosition: SnackPosition.BOTTOM,
+                      margin:
+                          EdgeInsets.symmetric(vertical: 20, horizontal: 10),
+                    );
+                  } else {
+                    _joinMeeting();
+                  }
                 },
                 child: Text("Create Meeting",
                     style: subtitlestyle.copyWith(color: Colors.white)),
@@ -197,7 +206,7 @@ class _CreateMeetState extends State<CreateMeet> {
       }
     }
     // Define meetings options here
-    var options = JitsiMeetingOptions(room: roomText)
+    var options = JitsiMeetingOptions(room: roomText.text.trim())
       ..serverURL = serverUrl
       ..subject = subjectText.text
       ..userDisplayName = nameText.text

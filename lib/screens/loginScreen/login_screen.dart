@@ -19,7 +19,7 @@ class LoginScreen extends StatelessWidget {
                 width: 80.w,
               ),
               Text(
-                'Welcome to Project Manager',
+                'Welcome to Proyecto',
                 textAlign: TextAlign.center,
                 style: title1Style,
               ),
