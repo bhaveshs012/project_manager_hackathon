@@ -39,7 +39,7 @@ teams and departments.
 They will also be able to conduct video conferences from within our app
 ## Screenshots
 
-![App Screenshot](/Screenshots/01.jpeg)
+![App Screenshot](/Screenshots/01.jpeg | height=100)
 ![App Screenshot](/Screenshots/02.jpeg)
 ![App Screenshot](/Screenshots/03.jpeg)
 ![App Screenshot](/Screenshots/04.jpeg)
