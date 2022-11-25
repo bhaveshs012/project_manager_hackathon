@@ -39,9 +39,11 @@ teams and departments.
 They will also be able to conduct video conferences from within our app
 ## Screenshots
 
-![App Screenshot](https://drive.google.com/file/d/1mYx9wFvK8Pfc6Q_zPprHjBCOr1UaabuE/view?usp=share_link)
-![App Screenshot](https://drive.google.com/file/d/1phuWzajQXegXQtMDv7YMHQtar7sw4SYb/view?usp=share_link)
-![App Screenshot](https://drive.google.com/file/d/1ZYDqrN2axuuHw_rDU9UwGrzLI_lCJ3cG/view?usp=share_link)
+![App Screenshot](/Screenshots/01.jpeg)
+![App Screenshot](/Screenshots/02.jpeg)
+![App Screenshot](/Screenshots/03.jpeg)
+![App Screenshot](/Screenshots/04.jpeg)
+![App Screenshot](/Screenshots/05.jpeg)
 
 ## Tech Stack
 
